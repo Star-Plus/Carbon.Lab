@@ -1,0 +1,28 @@
+classDiagram
+    
+    C14File <-- C14Parser
+
+    class C14Parser {
+        - c14Path : path
+        + parseSubFs(fs: SubFileSystem&) void
+    }
+    
+    class Carbon {
+        - c14Parser: C14Parser$
+        + fs: SubFileSystem
+
+        + init(c14FilePath: path)$ Carbon
+    }
+
+    class SubFileSystem {
+        - rootPath: path
+        
+        + root() path
+        + write(fileEntry: string) void
+        + delete(fileEntry: string) void
+    }
+
+    Carbon --* C14Parser
+    Carbon --* SubFileSystem
+
+    C14Parser -- SubFileSystem
