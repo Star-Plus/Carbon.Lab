@@ -1,5 +1,5 @@
 #include <gtest/gtest.h>
-#include <carbon/utils/generators/UUID.h>
+#include "utils/generators/UUID.h"
 
 TEST(UUIDTest, UUIDGeneration) {
     auto u1 = CarbonLab::UUID::generateUUID();
