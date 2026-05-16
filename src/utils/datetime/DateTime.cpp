@@ -29,7 +29,7 @@ namespace CarbonLab
     str DateTime::toStr(const str& format) const
     {
         char buf[64];
-        strftime(buf, sizeof(buf), "%Y-%m-%d %H:%M:%S", localtime(&rawTime));
+        strftime(buf, sizeof(buf), format.c_str(), localtime(&rawTime));
         return std::string(buf);
     }
 

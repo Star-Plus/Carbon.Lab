@@ -13,6 +13,8 @@ namespace CarbonLab {
     public:
         Logger();
         Logger(std::string name="");
+        Logger(Logger&&) = default;
+        Logger& operator=(Logger&&) = default;
         ~Logger();
 
         void info(const std::string& message, const std::source_location& location = std::source_location::current()) const;
@@ -28,7 +30,7 @@ namespace CarbonLab {
     private:
         std::string name;
         std::chrono::steady_clock::time_point checkPointTime;
-        mutable std::fstream logFile;
+        mutable std::unique_ptr<std::fstream> logFile;
     };
 
 }

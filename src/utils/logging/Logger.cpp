@@ -52,7 +52,9 @@ namespace CarbonLab {
     #endif
 
         std::filesystem::create_directories(appDir/"logs");
-        logFile = std::fstream(appDir/"logs/ALL.log", std::ios::out | std::ios::app);
+        
+        logFile = std::make_unique<std::fstream>();
+        logFile->open(appDir/"logs/ALL.log", std::ios::out | std::ios::app);
     }
     
     Logger::Logger(std::string name) : name(std::move(name))
@@ -89,12 +91,14 @@ namespace CarbonLab {
 
         std::filesystem::create_directories(appDir/"logs");
         const auto logFileName = this->name.empty() ? "ALL.log" : this->name + ".log";
-        logFile = std::fstream(appDir / "logs" / logFileName, std::ios::out | std::ios::trunc);
+
+        logFile = std::make_unique<std::fstream>();
+        logFile->open(appDir / "logs" / logFileName, std::ios::out | std::ios::trunc);
     }
 
     Logger::~Logger()
     {
-        logFile.close();
+        logFile->close();
     }
 
     void Logger::info(const std::string& message, const std::source_location& location) const {
@@ -137,7 +141,7 @@ namespace CarbonLab {
             setConsoleColor(Color::RESET);
         #endif
 
-        logFile << "[" << Format::split(location.file_name(), "\\/").back()
+        *logFile << "[" << Format::split(location.file_name(), "\\/").back()
         << ":" << location.line() << "] "
         << "(" << name << ") "
         << "[" << std::string(timeBuf) << "] "

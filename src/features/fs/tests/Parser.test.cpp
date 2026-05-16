@@ -1,6 +1,7 @@
 #include "components/ConfigurationParser.h"
 #include "features/fs/SubFileSystem.h"
 #include "features/fs/parsers/FsC14Parser.h"
+#include <filesystem>
 #include <gtest/gtest.h>
 
 class ParseFsTest : public ::testing::Test {
@@ -26,10 +27,7 @@ TEST_F(ParseFsTest, EntryPoint) {
 }
 
 TEST_F(ParseFsTest, ParseStageFiles) {
-    CarbonLab::ConfigurationParser parser("assets/fs-test.yml");
-    CarbonLab::FsC14Parser fsParser;
-
-    auto fs = fsParser.parse(parser.getYaml());
+    auto fs = fsParser->parse(parser->getYaml());
 
     EXPECT_EQ(fs.files().size(), 1);
 
@@ -37,4 +35,11 @@ TEST_F(ParseFsTest, ParseStageFiles) {
 
     EXPECT_EQ(file.filename, "text.txt");
     EXPECT_EQ(file.seedType, CarbonLab::SeedType::Random);
+}
+
+TEST_F(ParseFsTest, CommitFsAfterParsing) {
+    auto fs = fsParser->parse(parser->getYaml());
+    EXPECT_NO_THROW(fs.commit());
+
+    EXPECT_TRUE(std::filesystem::exists(fs.root() / "text.txt"));
 }

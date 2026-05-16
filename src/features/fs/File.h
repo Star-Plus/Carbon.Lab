@@ -2,6 +2,7 @@
 
 #include "core.h"
 #include "utils/generators/StringSeeds.h"
+#include <algorithm>
 #include <optional>
 
 namespace CarbonLab {
