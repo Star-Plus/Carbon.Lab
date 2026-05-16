@@ -1,0 +1,7 @@
+name: fs-test
+
+fs:
+  files:
+    - name: text.txt
+      seed_type: random
+      seed_length: 30

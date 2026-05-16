@@ -1,19 +1,26 @@
 #pragma once
 
+#include "core.h"
 #include "utils/generators/StringSeeds.h"
 #include <optional>
 
 namespace CarbonLab {
 
-    class C14Parser;
-
     enum class SeedType {
         Copied, Random, UC
     };
 
-    class File {
-    public:
+    inline SeedType seedTypeFromStr(const str& str) {
+        auto lower = str; std::transform(lower.begin(), lower.end(), lower.begin(), [](unsigned char c) { return std::tolower(c); });
 
+        if (lower == "copied") return SeedType::Copied;
+        else if (lower == "random") return SeedType::Random;
+        else if (lower == "uc") return SeedType::UC;
+
+        return SeedType::Random;
+    }
+
+    struct File {
         File(const str& filename, const fpath& virtualFilePath, const fpath& seedFilePath, bool preRunWrite=false) : 
             filename(filename) ,seedFilePath(seedFilePath), virtualPath(virtualFilePath), preRunWrite(preRunWrite), seedType(SeedType::Copied) {}
             
@@ -26,14 +33,7 @@ namespace CarbonLab {
                 // Generate random content
                 content = Seeds::generateRandomString(randomContentLength);
             }
-
-        
-        fpath getPath() const { return virtualPath; }
-        str getName() const { return filename; }
-
-        friend class C14Parser;
-
-    private:
+            
         std::optional<fpath> seedFilePath = std::nullopt;
         fpath virtualPath;
         str filename;
