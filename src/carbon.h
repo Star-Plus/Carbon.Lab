@@ -11,7 +11,7 @@ class Carbon {
 public:
     std::unique_ptr<CarbonLab::SubFileSystem> fs = nullptr;
 
-    static void init(const fpath& c14Path);
+    static Carbon init(const fpath& c14Path);
 
     void setFs(CarbonLab::SubFileSystem fs) { this->fs = std::make_unique<CarbonLab::SubFileSystem>(fs); }
 };
