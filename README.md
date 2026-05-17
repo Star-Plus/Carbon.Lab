@@ -1,3 +1,5 @@
+<img src="static/logo.webp" width="300">
+
 # Carbon
 
 Carbon is a lightweight helper for creating reproducible test environments around temporary file systems and managed runtime configuration. It is designed to make integration and functional tests easier by providing a controlled workspace, cleanup semantics, and a central entry point for filesystem setup.
