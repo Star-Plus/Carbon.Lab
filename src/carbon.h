@@ -1,18 +1,17 @@
 #pragma once
 
+#include <memory>
+
 #include "core.h"
-#include "components/ConfigurationParser.h"
 #include "features/fs/SubFileSystem.h"
 
 
 class Carbon {
 
 public:
-    CarbonLab::SubFileSystem fs;
+    std::unique_ptr<CarbonLab::SubFileSystem> fs = nullptr;
 
     static void init(const fpath& c14Path);
 
-private:
-    CarbonLab::C14Parser c14Parser;
-
+    void setFs(CarbonLab::SubFileSystem fs) { this->fs = std::make_unique<CarbonLab::SubFileSystem>(fs); }
 };

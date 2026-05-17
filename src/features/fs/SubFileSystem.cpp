@@ -5,20 +5,59 @@
 #include <filesystem>
 #include <fstream>
 #include <stdexcept>
+#include <vector>
 
 namespace CarbonLab {
 
-    SubFileSystem::SubFileSystem(const fpath& virtualRoot) : virtualRoot(virtualRoot), logger("SubFileSystem") {
+    SubFileSystem::SubFileSystem(const fpath& virtualRoot, bool autoCleanup) : 
+        virtualRoot(virtualRoot), 
+        autoCleanup(autoCleanup), 
+        logger("SubFileSystem") 
+    {
         std::filesystem::create_directories(virtualRoot);
     }
 
-    void SubFileSystem::addFile(const File& file) {
+    SubFileSystem::~SubFileSystem() {
+        if (autoCleanup)
+            cleanup();
+    }
 
-        stagedFiles.push_back(file);
+    std::vector<File> SubFileSystem::files() const {
+        std::vector<File> files;
+
+        for (auto& [_, file] : stagedFiles) {
+            files.push_back(file);
+        }
+
+        return files;
+    }
+
+    void SubFileSystem::write(const str& filename, const uint64_t delay) {
+        auto file = stagedFiles.find(filename);
+
+        if (file == stagedFiles.end()) {
+            throw std::runtime_error("File not found: " + filename);
+        }
+
+        writeFile(file->second);
+    }
+
+    void SubFileSystem::trunc(const str& filename, const uint64_t delay) {
+        auto file = stagedFiles.find(filename);
+
+        if (file == stagedFiles.end()) {
+            throw std::runtime_error("File not found: " + filename);
+        }
+
+        truncateFile(file->second);
+    }
+
+    void SubFileSystem::addFile(const File& file) {
+        stagedFiles.insert({file.filename, file});
     }
 
     void SubFileSystem::commit() {
-        for (auto& file : stagedFiles) {
+        for (auto& [_, file] : stagedFiles) {
             if (file.preRunWrite) {
                 writeFile(file);
             }
@@ -40,6 +79,10 @@ namespace CarbonLab {
         std::ofstream out(file.virtualPath, std::ios::out | std::ios::trunc | std::ios::binary);
         out << file.content;
         out.close();
+    }
+
+    void SubFileSystem::truncateFile(const File& file) {
+        std::filesystem::remove(file.virtualPath);
     }
 
 }

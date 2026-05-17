@@ -1,7 +1,9 @@
 #pragma once
 
 #include "File.h"
+#include "core.h"
 #include "utils/logging/Logger.h"
+#include <map>
 #include <vector>
 
 namespace CarbonLab {
@@ -9,17 +11,16 @@ namespace CarbonLab {
 
     class SubFileSystem {
     public:
-        SubFileSystem(const fpath& virtualRoot);
-        SubFileSystem(SubFileSystem&&) = default;
-        SubFileSystem& operator=(SubFileSystem&&) = default;
+        SubFileSystem(const fpath& virtualRoot, bool autoCleanup=true);
+        ~SubFileSystem();
 
         void write(const str& filename, const uint64_t delay=0);
         void trunc(const str& filename, const uint64_t delay=0);
 
         fpath root() const { return virtualRoot; }
-        std::vector<File> files() const { return stagedFiles; }
+        std::vector<File> files() const;
 
-        void clear() { stagedFiles.clear(); }
+        void cleanup();
 
         void addFile(const File& file);
 
@@ -29,7 +30,9 @@ namespace CarbonLab {
     private:
         Logger logger;
         fpath virtualRoot;
-        std::vector<File> stagedFiles;
+        bool autoCleanup = true;
+        
+        std::map<str, File> stagedFiles;
 
         void writeFile(const File& file);
         void truncateFile(const File& file);

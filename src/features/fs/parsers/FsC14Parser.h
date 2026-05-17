@@ -1,3 +1,5 @@
+#pragma once
+
 #include "core/C14Parser.h"
 #include "features/fs/SubFileSystem.h"
 #include "utils/logging/Logger.h"
