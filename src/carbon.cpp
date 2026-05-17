@@ -3,5 +3,10 @@
 
 Carbon Carbon::init(const fpath& c14Path) {
     CarbonLab::ConfigurationParser parser(c14Path);
-    return parser.load();
+    auto carbon = parser.load();
+
+    if (carbon.fs)
+        carbon.fs->commit();
+
+    return carbon;
 }

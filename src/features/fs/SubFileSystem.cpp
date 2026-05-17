@@ -15,7 +15,22 @@ namespace CarbonLab {
         logger("SubFileSystem") 
     {
         std::filesystem::create_directories(virtualRoot);
+        commit();
     }
+
+    SubFileSystem::SubFileSystem(const fpath& virtualRoot, const std::vector<File>& files, bool autoCleanup) :
+        virtualRoot(virtualRoot), 
+        autoCleanup(autoCleanup), 
+        logger("SubFileSystem")
+        {
+            std::filesystem::create_directories(virtualRoot);
+
+            for (auto& file : files) {
+                stagedFiles.insert({file.filename, file});
+            }
+
+            commit();
+        }
 
     SubFileSystem::~SubFileSystem() {
         if (autoCleanup)
@@ -65,24 +80,27 @@ namespace CarbonLab {
     }
 
     void SubFileSystem::writeFile(const File& file) {
-        std::filesystem::create_directories(file.virtualPath.parent_path());
+        std::filesystem::create_directories(virtualRoot / file.virtualPath.parent_path());
 
         if (file.seedType == SeedType::Copied) {
             if (!file.seedFilePath) {
                 throw std::runtime_error("Seed file path" + file.filename + " is not set");
             }
 
-            std::filesystem::copy_file(file.seedFilePath.value(), file.virtualPath);
+            std::filesystem::copy_file(file.seedFilePath.value(), virtualRoot / file.virtualPath);
             return;
         }
 
-        std::ofstream out(file.virtualPath, std::ios::out | std::ios::trunc | std::ios::binary);
+        std::ofstream out(virtualRoot / file.virtualPath, std::ios::out | std::ios::trunc | std::ios::binary);
         out << file.content;
         out.close();
     }
 
     void SubFileSystem::truncateFile(const File& file) {
-        std::filesystem::remove(file.virtualPath);
+        std::filesystem::remove(virtualRoot / file.virtualPath);
     }
 
+    void SubFileSystem::cleanup() {
+        std::filesystem::remove_all(virtualRoot);
+    }
 }

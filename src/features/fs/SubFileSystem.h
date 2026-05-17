@@ -12,6 +12,7 @@ namespace CarbonLab {
     class SubFileSystem {
     public:
         SubFileSystem(const fpath& virtualRoot, bool autoCleanup=true);
+        SubFileSystem(const fpath& virtualRoot, const std::vector<File>& files, bool autoCleanup=true);
         ~SubFileSystem();
 
         void write(const str& filename, const uint64_t delay=0);
@@ -19,8 +20,6 @@ namespace CarbonLab {
 
         fpath root() const { return virtualRoot; }
         std::vector<File> files() const;
-
-        void cleanup();
 
         void addFile(const File& file);
 
@@ -36,6 +35,8 @@ namespace CarbonLab {
 
         void writeFile(const File& file);
         void truncateFile(const File& file);
+
+        void cleanup();
     };
 
 }

@@ -5,6 +5,7 @@
 #include "utils/datetime/DateTime.h"
 #include "core.h"
 #include "utils/generators/UUID.h"
+#include <vector>
 
 namespace CarbonLab {
 
@@ -23,9 +24,9 @@ namespace CarbonLab {
 
         logger.info("Creating test directory: " + root.string());
 
-        SubFileSystem fs(root, autoClean);
-
         auto fsData = node["fs"].as<C14FsSchema>();
+
+        std::vector<File> files;
 
         for (auto file : fsData.files) {
             auto seedType = seedTypeFromStr(file.seedType);
@@ -33,21 +34,23 @@ namespace CarbonLab {
             switch (seedType) {
 
             case SeedType::Copied:
-                fs.addFile(File(file.name, root / file.vpath, file.seed, file.preRunWrite));
+                files.push_back(File(file.name, file.vpath, fpath(file.seed), file.preRunWrite));
                 break;
 
             case SeedType::Random:
-                fs.addFile(File(file.name, root / file.vpath, file.seedLength, file.preRunWrite));
+                files.push_back(File(file.name, file.vpath, file.seedLength, file.preRunWrite));
                 break;
 
             case SeedType::UC:
-                fs.addFile(File(file.name, root / file.vpath, file.seed, file.preRunWrite));
+                files.push_back(File(file.name, file.vpath, file.seed, file.preRunWrite));
                 break;
 
             default:
                 break;
             }
         }
+
+        SubFileSystem fs(root, files, autoClean);
 
         return fs;
     }
