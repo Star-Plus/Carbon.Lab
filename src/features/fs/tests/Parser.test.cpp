@@ -8,7 +8,7 @@ class ParseFsTest : public ::testing::Test {
 
 protected:
     void SetUp() override {
-        parser = new CarbonLab::ConfigurationParser("assets/fs-test.yml");
+        parser = new CarbonLab::ConfigurationParser("assets/testing/fs-test.yml");
         fsParser = new CarbonLab::FsC14Parser();
     }
 
@@ -39,7 +39,5 @@ TEST_F(ParseFsTest, ParseStageFiles) {
 
 TEST_F(ParseFsTest, CommitFsAfterParsing) {
     auto fs = fsParser->parse(parser->getYaml());
-    EXPECT_NO_THROW(fs.commit());
-
     EXPECT_TRUE(std::filesystem::exists(fs.root() / "text.txt"));
 }

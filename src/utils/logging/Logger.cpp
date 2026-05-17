@@ -53,7 +53,7 @@ namespace CarbonLab {
 
         std::filesystem::create_directories(appDir/"logs");
         
-        logFile = std::make_unique<std::fstream>();
+        logFile = std::make_shared<std::ofstream>();
         logFile->open(appDir/"logs/ALL.log", std::ios::out | std::ios::app);
     }
     
@@ -92,13 +92,8 @@ namespace CarbonLab {
         std::filesystem::create_directories(appDir/"logs");
         const auto logFileName = this->name.empty() ? "ALL.log" : this->name + ".log";
 
-        logFile = std::make_unique<std::fstream>();
+        logFile = std::make_shared<std::ofstream>();
         logFile->open(appDir / "logs" / logFileName, std::ios::out | std::ios::trunc);
-    }
-
-    Logger::~Logger()
-    {
-        logFile->close();
     }
 
     void Logger::info(const std::string& message, const std::source_location& location) const {

@@ -1,3 +1,5 @@
+#pragma once
+
 #include "core.h"
 #include <vector>
 #include "yaml-cpp/node/node.h"

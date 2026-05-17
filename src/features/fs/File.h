@@ -42,6 +42,8 @@ namespace CarbonLab {
         SeedType seedType;
         bool preRunWrite = false;
 
+        bool operator < (const File& other) const { return filename < other.filename; }
+
     };
 
 }
