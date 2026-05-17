@@ -13,7 +13,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 file(GLOB_RECURSE SOURCE_FILES CONFIGURE_DEPENDS "src/*.cpp")
 file(GLOB_RECURSE HEADER_FILES CONFIGURE_DEPENDS "src/*.h")
 file(GLOB_RECURSE TESTING_FILES CONFIGURE_DEPENDS "src/**/*.test.cpp")
-file(GLOB_RECURSE GLOBAL_TESTING_FILES CONFIGURE_DEPENDS "test/*.cpp")
+file(GLOB_RECURSE GLOBAL_TESTING_FILES CONFIGURE_DEPENDS "tests/*.cpp")
 
 list(FILTER SOURCE_FILES EXCLUDE REGEX ".*\\.test\\.cpp$")
 
@@ -55,6 +55,8 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(googletest)
 
+target_link_libraries(Carbon PUBLIC GTest::gtest_main)
+
 enable_testing()
 include(GoogleTest)
 
@@ -64,7 +66,7 @@ add_executable(CarbonTests
 )
 
 target_compile_options(CarbonTests PRIVATE -Wno-cpp)
-target_link_libraries(CarbonTests PRIVATE GTest::gtest_main Carbon)
+target_link_libraries(CarbonTests PRIVATE Carbon)
 
 gtest_discover_tests(CarbonTests)
 
