@@ -1,0 +1,115 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "mingw",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/out/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE":"Debug",
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++"
+            }
+        },
+        {
+            "name": "VS2022",
+            "displayName": "Visual Studio Community 2022 Release - amd64",
+            "description": "Using compilers for Visual Studio 17 2022 (x64 architecture)",
+            "generator": "Visual Studio 17 2022",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
+                "CMAKE_C_COMPILER": "cl.exe",
+                "CMAKE_CXX_COMPILER": "cl.exe"
+            },
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "toolset": {
+                "value": "host=x64",
+                "strategy": "external"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "VS2022-debug",
+            "displayName": "Visual Studio Community 2022 Release - amd64 - Debug",
+            "configurePreset": "VS2022",
+            "configuration": "Debug"
+        },
+        {
+            "name": "VS2022-release",
+            "displayName": "Visual Studio Community 2022 Release - amd64 - Release",
+            "configurePreset": "VS2022",
+            "configuration": "Release"
+        },
+        {
+            "name": "mingw-debug",
+            "displayName": "MinGW - Debug",
+            "configurePreset": "mingw",
+            "configuration": "Debug"
+        },
+        {
+            "name": "mingw-release",
+            "displayName": "MinGW - Release",
+            "configurePreset": "mingw",
+            "configuration": "Release"
+        }
+    ],
+    "testPresets": [
+        {
+            "name": "VS2022-debug",
+            "displayName": "Run Tests - Debug",
+            "configurePreset": "VS2022",
+            "configuration": "Debug",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "jobs": 2,
+                "noTestsAction": "ignore"
+            }
+        },
+        {
+            "name": "VS2022-release",
+            "displayName": "Run Tests - Release",
+            "configurePreset": "VS2022",
+            "configuration": "Release",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "jobs": 2,
+                "noTestsAction": "ignore"
+            }
+        },
+        {
+            "name": "mingw-debug",
+            "displayName": "Run Tests - MinGW Debug",
+            "configurePreset": "mingw",
+            "configuration": "Debug",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "jobs": 2,
+                "noTestsAction": "ignore"
+            }
+        },
+        {
+            "name": "mingw-release",
+            "displayName": "Run Tests - MinGW Release",
+            "configurePreset": "mingw",
+            "configuration": "Release",
+            "output": {
+                "outputOnFailure": true
+            },
+            "execution": {
+                "jobs": 2,
+                "noTestsAction": "ignore"
+            }
+        }
+    ]
+}
