@@ -12,7 +12,7 @@ namespace CarbonLab {
 
         if (loadedYaml["fs"].IsDefined()) {
             FsC14Parser parser;
-            parsers.insert({ParserType::FS, parser});
+            parsers.insert({ParserType::FS, std::make_unique<FsC14Parser>(parser)});
         }
     }
 
@@ -20,8 +20,8 @@ namespace CarbonLab {
         Carbon carbon;
         
         if (parsers.contains(ParserType::FS)){
-            auto castedParser = static_cast<FsC14Parser&>(parsers[ParserType::FS]);
-            carbon.setFs(castedParser.parse(loadedYaml["fs"]));
+            auto castedParser = static_cast<FsC14Parser*>(parsers[ParserType::FS].get());
+            carbon.setFs(castedParser->parse(loadedYaml));
         }
 
         return carbon;
