@@ -26,7 +26,7 @@ namespace CarbonLab {
 
         fpath fileSrc;
         YAML::Node loadedYaml;
-        std::map<ParserType, IC14Parser> parsers;
+        std::map<ParserType, std::unique_ptr<IC14Parser>> parsers;
 
     };
 
