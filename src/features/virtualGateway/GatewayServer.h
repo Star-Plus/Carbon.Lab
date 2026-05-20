@@ -12,9 +12,13 @@ namespace CarbonLab {
         GatewayServer() = default;
         ~GatewayServer() { stop(); }
 
-        void addMock(const str& method, const str& url, const MockNetworkData& data);
+        void addMock(const MockNetworkData& data);
         int start();
         void stop();
+
+        void launch();
+
+        std::unordered_map<str, std::set<MockNetworkData>>& getMockTable() { return mockTable; }
 
     private:
         int port;

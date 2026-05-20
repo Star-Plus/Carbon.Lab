@@ -17,7 +17,7 @@ namespace CarbonLab {
             parsers.insert({ParserType::FS, std::make_unique<FsC14Parser>(parser)});
         }
 
-        if (loadedYaml["virtualGateway"].IsDefined()) {
+        if (loadedYaml["virtual_gateway"].IsDefined()) {
             HttpServiceMockParser parser;
             parsers.insert({ParserType::V_GS, std::make_unique<HttpServiceMockParser>(parser)});
         }

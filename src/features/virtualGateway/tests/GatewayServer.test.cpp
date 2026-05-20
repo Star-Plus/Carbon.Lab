@@ -13,7 +13,7 @@ TEST(GatewayServer, AddMock) {
     CarbonLab::MockRequest request{"GET", "http://localhost:7111/test", "", ""};
     CarbonLab::MockResponse response{200, "text/plain", "Hello World"};
 
-    server.addMock("GET", "http://localhost:7111/test", CarbonLab::MockNetworkData{request, response});
+    server.addMock(CarbonLab::MockNetworkData{request, response});
 
     auto port = server.start();
     
@@ -36,7 +36,7 @@ TEST(GatewayServer, MockMiss) {
 
     auto res = client.Get("/");
     
-    ASSERT_TRUE(res) << "The HTTP client failed to get any response! (res is null)"; 
+    ASSERT_TRUE(res) << "The HTTP client failed to get any response! (res is null)";
     
     ASSERT_EQ(res->status, 200);
 

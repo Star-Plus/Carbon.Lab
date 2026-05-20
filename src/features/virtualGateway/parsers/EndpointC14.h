@@ -35,10 +35,10 @@ namespace YAML {
         static bool decode(const Node& node, CarbonLab::EndpointC14Request& rhs) {
             rhs.url = node["url"].as<str>();
             rhs.method = node["method"].as<str>();
-            rhs.body = node["body"].as<str>();
-            rhs.contentType = node["content_type"].as<str>();
-            rhs.headers = node["headers"].as<std::vector<std::pair<str, str>>>();
-            rhs.queryParams = node["query_params"].as<std::vector<std::pair<str, str>>>();
+            rhs.body = node["body"].IsDefined() ? node["body"].as<str>() : "";
+            rhs.contentType = node["content_type"].IsDefined() ? node["content_type"].as<str>() : "";
+            rhs.headers = node["headers"].IsDefined() ? node["headers"].as<std::vector<std::pair<str, str>>>() : std::vector<std::pair<str, str>>();
+            rhs.queryParams = node["query_params"].IsDefined() ? node["query_params"].as<std::vector<std::pair<str, str>>>() : std::vector<std::pair<str, str>>();
             return true;
         }
     };
@@ -48,8 +48,8 @@ namespace YAML {
         static bool decode(const Node& node, CarbonLab::EndpointC14Response& rhs) {
             rhs.statusCode = node["status_code"].as<int>();
             rhs.contentType = node["content_type"].as<str>();
-            rhs.body = node["body"].as<str>();
-            rhs.headers = node["headers"].as<std::vector<std::pair<str, str>>>();
+            rhs.body = node["body"].IsDefined() ? node["body"].as<str>() : "";
+            rhs.headers = node["headers"].IsDefined() ? node["headers"].as<std::vector<std::pair<str, str>>>() : std::vector<std::pair<str, str>>();
             return true;
         }
     };

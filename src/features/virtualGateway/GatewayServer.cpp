@@ -2,12 +2,14 @@
 #include "models/MockNetworkData.h"
 #include <mutex>
 
+#include "features/environment/Environment.h"
+
 namespace CarbonLab {
 
-    void GatewayServer::addMock(const str& method, const str& url, const MockNetworkData& data) {
+    void GatewayServer::addMock(const MockNetworkData& data) {
         std::unique_lock guard(mockTableMutex);
 
-        str rountingKey = method + "|" + url;
+        str rountingKey = data.request.method + "|" + data.request.url;
 
         if (!mockTable.contains(rountingKey)){
             mockTable[rountingKey] = std::set<MockNetworkData>();
@@ -40,6 +42,14 @@ namespace CarbonLab {
         if (serverThread.joinable()) {
             serverThread.join();
         }
+
+        mockTable.clear();
+        Environment::remove("HTTP_PROXY");
+    }
+
+    void GatewayServer::launch() {
+        int port = start();
+        Environment::set("HTTP_PROXY", "http://127.0.0.1:" + std::to_string(port));
     }
 
     void GatewayServer::setupProxyRouter() {

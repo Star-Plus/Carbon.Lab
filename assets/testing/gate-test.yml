@@ -1,0 +1,12 @@
+name: gate-test
+
+virtual_gateway:
+  endpoints:
+    testEndpoint:
+      request:
+        method: GET
+        url: http://localhost:7111/test
+      response:
+        status_code: 200
+        content_type: text/plain
+        body: "Hello World"
