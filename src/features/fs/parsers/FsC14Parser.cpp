@@ -5,11 +5,12 @@
 #include "utils/datetime/DateTime.h"
 #include "core.h"
 #include "utils/generators/UUID.h"
+#include <memory>
 #include <vector>
 
 namespace CarbonLab {
 
-    SubFileSystem FsC14Parser::parse(const YAML::Node& node) {
+    std::unique_ptr<SubFileSystem> FsC14Parser::parse(const YAML::Node& node) {
         logger.info("Parsing C14 FS");
         
         auto name = node["name"].as<str>();
@@ -50,8 +51,7 @@ namespace CarbonLab {
             }
         }
 
-        SubFileSystem fs(root, files, autoClean);
-
+        auto fs = std::make_unique<SubFileSystem>(root, files, autoClean);
         return fs;
     }
 

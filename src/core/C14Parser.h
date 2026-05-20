@@ -12,6 +12,6 @@ namespace CarbonLab {
     template<class T>
     class C14Parser : public IC14Parser {
     public:
-        virtual T parse(const YAML::Node& node) = 0;
+        virtual std::unique_ptr<T> parse(const YAML::Node& node) = 0;
     };
 }
