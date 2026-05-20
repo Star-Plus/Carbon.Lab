@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.10)
 project(Carbon)
 
+if(WIN32)
+    add_compile_definitions(_WIN32_WINNT=0x0A00)
+endif()
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -30,12 +34,16 @@ set(YAML_CPP_BUILD_CONTRIB OFF CACHE BOOL "" FORCE)
 set(YAML_CPP_BUILD_TOOLS OFF CACHE BOOL "" FORCE)
 set(YAML_CPP_BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
 
+# YAML
+
 FetchContent_Declare(
   yaml-cpp
   GIT_REPOSITORY https://github.com/jbeder/yaml-cpp.git
   GIT_TAG yaml-cpp-0.9.0
 )
 FetchContent_MakeAvailable(yaml-cpp)
+
+# UUID
 
 FetchContent_Declare(
   stduuid
@@ -44,10 +52,23 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(stduuid)
 
-target_link_libraries(Carbon PUBLIC yaml-cpp::yaml-cpp stduuid)
+# Http Library
+
+set(HTTPLIB_USE_ZSTD_IF_AVAILABLE OFF CACHE BOOL "" FORCE)
+set(HTTPLIB_USE_NON_BLOCKING_GETADDRINFO OFF CACHE BOOL "" FORCE)
+
+FetchContent_Declare(
+  httplib
+  GIT_REPOSITORY https://github.com/yhirose/cpp-httplib.git
+  GIT_TAG        v0.45.0
+)
+FetchContent_MakeAvailable(httplib)
+
+target_link_libraries(Carbon PUBLIC yaml-cpp::yaml-cpp stduuid httplib::httplib)
 
 target_include_directories(Carbon PUBLIC ${stduuid_SOURCE_DIR}/include)
 
+# GTest
 
 FetchContent_Declare(
   googletest

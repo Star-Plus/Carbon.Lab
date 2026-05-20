@@ -1,0 +1,2 @@
+1- Build a MITM layer
+2- Just configure any endpoint with the mock to be injected with the test at runtime.
