@@ -24,8 +24,8 @@ protected:
 };
 
 TEST_F(SubFsTest, AutoWriteOnRun) {
-    fs->addFile(CarbonLab::File("file1", "file1.txt", str("content1"), true));
-    fs->addFile(CarbonLab::File("file2", "file2.txt", str("content2"), false));
+    fs->addFile(CarbonLab::VirtualFile("file1", "file1.txt", str("content1"), true));
+    fs->addFile(CarbonLab::VirtualFile("file2", "file2.txt", str("content2"), false));
 
     fs->commit();
 
@@ -51,7 +51,7 @@ TEST_F(SubFsTest, AutoCleanup) {
 }
 
 TEST_F(SubFsTest, CopyFileSeed) {
-    fs->addFile(CarbonLab::File("file1", "file1.txt", fpath("assets/testing/seed.txt"), true));
+    fs->addFile(CarbonLab::VirtualFile("file1", "file1.txt", fpath("assets/testing/seed.txt"), true));
 
     fs->commit();
 

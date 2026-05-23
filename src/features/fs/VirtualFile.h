@@ -21,14 +21,14 @@ namespace CarbonLab {
         return SeedType::Random;
     }
 
-    struct File {
-        File(const str& filename, const fpath& virtualFilePath, const fpath& seedFilePath, bool preRunWrite=false) : 
+    struct VirtualFile {
+        VirtualFile(const str& filename, const fpath& virtualFilePath, const fpath& seedFilePath, bool preRunWrite=false) : 
             filename(filename) ,seedFilePath(seedFilePath), virtualPath(virtualFilePath), preRunWrite(preRunWrite), seedType(SeedType::Copied) {}
             
-        File(const str& filename, const fpath& virtualFilePath, const str& content, bool preRunWrite=false) :
+        VirtualFile(const str& filename, const fpath& virtualFilePath, const str& content, bool preRunWrite=false) :
             filename(filename), virtualPath(virtualFilePath), preRunWrite(preRunWrite), content(content), seedType(SeedType::UC) {}
 
-        File(const str& filename, const fpath& virtualFilePath, const size_t randomContentLength=30, bool preRunWrite=false) :
+        VirtualFile(const str& filename, const fpath& virtualFilePath, const size_t randomContentLength=30, bool preRunWrite=false) :
             filename(filename), virtualPath(virtualFilePath), preRunWrite(preRunWrite) , seedType(SeedType::Random)
             {
                 // Generate random content
@@ -42,7 +42,7 @@ namespace CarbonLab {
         SeedType seedType;
         bool preRunWrite = false;
 
-        bool operator < (const File& other) const { return filename < other.filename; }
+        bool operator < (const VirtualFile& other) const { return filename < other.filename; }
 
     };
 

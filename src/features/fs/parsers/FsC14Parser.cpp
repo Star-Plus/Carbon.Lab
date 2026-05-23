@@ -1,5 +1,5 @@
 #include "FsC14Parser.h"
-#include "features/fs/File.h"
+#include "features/fs/VirtualFile.h"
 #include "features/fs/SubFileSystem.h"
 #include "schemas/C14FsSchema.h"
 #include "utils/datetime/DateTime.h"
@@ -27,7 +27,7 @@ namespace CarbonLab {
 
         auto fsData = node["fs"].as<C14FsSchema>();
 
-        std::vector<File> files;
+        std::vector<VirtualFile> files;
 
         for (auto file : fsData.files) {
             auto seedType = seedTypeFromStr(file.seedType);
@@ -35,15 +35,15 @@ namespace CarbonLab {
             switch (seedType) {
 
             case SeedType::Copied:
-                files.push_back(File(file.name, file.vpath, fpath(file.seed), file.preRunWrite));
+                files.push_back(VirtualFile(file.name, file.vpath, fpath(file.seed), file.preRunWrite));
                 break;
 
             case SeedType::Random:
-                files.push_back(File(file.name, file.vpath, file.seedLength, file.preRunWrite));
+                files.push_back(VirtualFile(file.name, file.vpath, file.seedLength, file.preRunWrite));
                 break;
 
             case SeedType::UC:
-                files.push_back(File(file.name, file.vpath, file.seed, file.preRunWrite));
+                files.push_back(VirtualFile(file.name, file.vpath, file.seed, file.preRunWrite));
                 break;
 
             default:

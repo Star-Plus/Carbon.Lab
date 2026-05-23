@@ -1,5 +1,5 @@
 #include "SubFileSystem.h"
-#include "File.h"
+#include "VirtualFile.h"
 #include "utils/logging/Logger.h"
 
 #include <filesystem>
@@ -14,15 +14,17 @@ namespace CarbonLab {
         autoCleanup(autoCleanup), 
         logger("SubFileSystem") 
     {
+        std::filesystem::remove_all(virtualRoot);
         std::filesystem::create_directories(virtualRoot);
         commit();
     }
 
-    SubFileSystem::SubFileSystem(const fpath& virtualRoot, const std::vector<File>& files, bool autoCleanup) :
+    SubFileSystem::SubFileSystem(const fpath& virtualRoot, const std::vector<VirtualFile>& files, bool autoCleanup) :
         virtualRoot(virtualRoot), 
         autoCleanup(autoCleanup), 
         logger("SubFileSystem")
         {
+            std::filesystem::remove_all(virtualRoot);
             std::filesystem::create_directories(virtualRoot);
 
             for (auto& file : files) {
@@ -37,8 +39,8 @@ namespace CarbonLab {
             cleanup();
     }
 
-    std::vector<File> SubFileSystem::files() const {
-        std::vector<File> files;
+    std::vector<VirtualFile> SubFileSystem::files() const {
+        std::vector<VirtualFile> files;
 
         for (auto& [_, file] : stagedFiles) {
             files.push_back(file);
@@ -67,7 +69,7 @@ namespace CarbonLab {
         truncateFile(file->second);
     }
 
-    void SubFileSystem::addFile(const File& file) {
+    void SubFileSystem::addFile(const VirtualFile& file) {
         stagedFiles.insert({file.filename, file});
     }
 
@@ -79,7 +81,7 @@ namespace CarbonLab {
         }
     }
 
-    void SubFileSystem::writeFile(const File& file) {
+    void SubFileSystem::writeFile(const VirtualFile& file) {
         std::filesystem::create_directories(virtualRoot / file.virtualPath.parent_path());
 
         if (file.seedType == SeedType::Copied) {
@@ -96,11 +98,15 @@ namespace CarbonLab {
         out.close();
     }
 
-    void SubFileSystem::truncateFile(const File& file) {
+    void SubFileSystem::truncateFile(const VirtualFile& file) {
         std::filesystem::remove(virtualRoot / file.virtualPath);
     }
 
     void SubFileSystem::cleanup() {
         std::filesystem::remove_all(virtualRoot);
+    }
+
+    FileComparator SubFileSystem::comparator(const fpath& file1, const fpath& file2) {
+        return FileComparator(virtualRoot / file1, virtualRoot / file2);
     }
 }
