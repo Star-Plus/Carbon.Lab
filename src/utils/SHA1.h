@@ -1,5 +1,5 @@
-#ifndef SHA1_H
-#define SHA1_H
+#pragma once
+
 #include <iomanip>
 #include <sstream>
 
@@ -119,6 +119,4 @@ namespace CarbonLab {
         }
     };
 
-} // namespace Split
-
-#endif //SHA1_H
+}
