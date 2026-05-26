@@ -22,8 +22,10 @@ namespace CarbonLab {
 }
 
 
-
 namespace YAML {
+
+    using namespace CarbonLab;
+
     template <>
     struct convert<CarbonLab::C14FsSchema> {
         static bool decode(const Node& node, CarbonLab::C14FsSchema& rhs) {

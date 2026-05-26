@@ -30,6 +30,8 @@ namespace CarbonLab {
 
 namespace YAML {
 
+    using namespace CarbonLab;
+
     template<>
     struct convert<CarbonLab::EndpointC14Request> {
         static bool decode(const Node& node, CarbonLab::EndpointC14Request& rhs) {

@@ -2,7 +2,6 @@
 
 #include <memory>
 
-#include "core.h"
 #include "features/fs/SubFileSystem.h"
 #include "features/virtualGateway/GatewayServer.h"
 
@@ -16,7 +15,7 @@ public:
     std::unique_ptr<CarbonLab::SubFileSystem> fs = nullptr;
     std::unique_ptr<CarbonLab::GatewayServer> virtualGateway = nullptr;
 
-    static Carbon init(const fpath& c14Path);
+    static Carbon init(const std::filesystem::path& c14Path);
 
     friend class CarbonLab::ConfigurationParser;
 

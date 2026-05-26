@@ -4,12 +4,14 @@
 
 #include "../SubFileSystem.h"
 
+using namespace CarbonLab;
+
 class SubFsTest : public ::testing::Test {
 
 protected:
     void SetUp() override {
-        fs = new CarbonLab::SubFileSystem(fpath("carbon/tests/fsTester"), true);
-        fs2 = new CarbonLab::SubFileSystem(fpath("carbon/tests/fsTester2"), false);
+        fs = new SubFileSystem(fpath("carbon/tests/fsTester"), true);
+        fs2 = new SubFileSystem(fpath("carbon/tests/fsTester2"), false);
     }
 
     void TearDown() override {
@@ -20,12 +22,12 @@ protected:
             delete fs2;
     }
 
-    CarbonLab::SubFileSystem* fs, *fs2;
+    SubFileSystem* fs, *fs2;
 };
 
 TEST_F(SubFsTest, AutoWriteOnRun) {
-    fs->addFile(CarbonLab::VirtualFile("file1", "file1.txt", str("content1"), true));
-    fs->addFile(CarbonLab::VirtualFile("file2", "file2.txt", str("content2"), false));
+    fs->addFile(VirtualFile("file1", "file1.txt", str("content1"), true));
+    fs->addFile(VirtualFile("file2", "file2.txt", str("content2"), false));
 
     fs->commit();
 
@@ -51,7 +53,7 @@ TEST_F(SubFsTest, AutoCleanup) {
 }
 
 TEST_F(SubFsTest, CopyFileSeed) {
-    fs->addFile(CarbonLab::VirtualFile("file1", "file1.txt", fpath("assets/testing/seed.txt"), true));
+    fs->addFile(VirtualFile("file1", "file1.txt", fpath("assets/testing/seed.txt"), true));
 
     fs->commit();
 
