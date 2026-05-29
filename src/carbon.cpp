@@ -3,14 +3,27 @@
 #include <filesystem>
 
 Carbon Carbon::init(const std::filesystem::path& c14Path) {
-
     if (!std::filesystem::exists(c14Path)) {
         throw std::runtime_error("C14 file not found");
     }
-
+    
     CarbonLab::ConfigurationParser parser(c14Path);
     auto carbon = parser.load();
+    
+    if (carbon.fs)
+        carbon.fs->commit();
 
+    return carbon;
+}
+
+Carbon Carbon::init(const std::filesystem::path& c14Path, const std::string& unit) {
+    if (!std::filesystem::exists(c14Path)) {
+        throw std::runtime_error("C14 file not found");
+    }
+    
+    CarbonLab::ConfigurationParser parser(c14Path);
+    auto carbon = parser.load();
+    
     if (carbon.fs)
         carbon.fs->commit();
 

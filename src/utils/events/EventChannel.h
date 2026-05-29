@@ -1,11 +1,12 @@
 #pragma once
 
 #include "BaseEvent.h"
+#include <memory>
 
 namespace CarbonLab {
 
     template <class TInstance, typename TEventPayload>
-    class IChannel {
+    class EventChannel {
     public:
         TInstance* getInstance() {
             static TInstance instance;
@@ -24,10 +25,10 @@ namespace CarbonLab {
             event.unsubscribe(listener);
         }
 
-    private:
-        IChannel(const BaseEvent<TEventPayload>& event) : event(event) {}
+    protected:
+        EventChannel(const BaseEvent<TEventPayload>& event) : event(std::make_shared<BaseEvent<TEventPayload>>(event)) {}
         
-        BaseEvent<TEventPayload> event;
+        std::shared_ptr<BaseEvent<TEventPayload>> event;
     };
 
 }

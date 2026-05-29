@@ -1,0 +1,12 @@
+name: suite-name
+
+fs:
+  files:
+    - name: parentFile
+      vpath: parent.txt
+      seed_type: random
+      seed_length: 30
+
+units:
+  case1:
+    src: assets/testing/fs-test.yml

@@ -141,4 +141,9 @@ namespace CarbonLab {
         }
     }
 
+    void GatewayServer::operator += (GatewayServer& other) {
+        this->port = other.port;
+        this->mockTable = other.mockTable;
+    }
+
 }

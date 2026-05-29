@@ -19,7 +19,7 @@ namespace CarbonLab {
         ConfigurationParser(const fpath& src);
         YAML::Node getYaml() { return loadedYaml; }
 
-        Carbon load();
+        Carbon load(const str& unit="");
 
     private:
         Logger logger;

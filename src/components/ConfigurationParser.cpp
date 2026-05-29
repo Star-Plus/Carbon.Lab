@@ -5,6 +5,7 @@
 #include "components/ConfigurationParser.h"
 
 #include "features/virtualGateway/parsers/HttpServiceMockParser.h"
+#include <memory>
 
 namespace CarbonLab {
     
@@ -23,17 +24,51 @@ namespace CarbonLab {
         }
     }
 
-    Carbon ConfigurationParser::load() {
+    Carbon ConfigurationParser::load(const str &unit) {
         Carbon carbon;
+
+        auto testName = unit.empty() ? loadedYaml["name"].as<str>() : unit;
         
         if (parsers.contains(ParserType::FS)){
             auto castedParser = static_cast<FsC14Parser*>(parsers[ParserType::FS].get());
-            carbon.setFs(castedParser->parse(loadedYaml));
+            carbon.fs = castedParser->parse(loadedYaml);
         }
 
         if (parsers.contains(ParserType::V_GS)){
             auto castedParser = static_cast<HttpServiceMockParser*>(parsers[ParserType::V_GS].get());
-            carbon.setVirtualGateway(castedParser->parse(loadedYaml));
+            carbon.virtualGateway = castedParser->parse(loadedYaml);
+        }
+
+        if (unit.empty()) {
+            if (loadedYaml["suite"].IsDefined()) {
+                auto suiteName = loadedYaml["suite"].as<str>();
+                carbon.assert = AssertionPool(testName, suiteName);
+            }
+            else
+                carbon.assert = AssertionPool(testName);
+        }
+        else {
+            auto suiteName = loadedYaml["name"].as<str>();
+            carbon.assert = AssertionPool(testName, suiteName);
+
+            auto unitFileSrc = loadedYaml["units"][unit]["src"].as<str>();
+
+            ConfigurationParser parser(unitFileSrc);
+            auto subCarbon = parser.load(unit);
+
+            if (subCarbon.fs){
+                if (carbon.fs)
+                    *(carbon.fs) += *(subCarbon.fs);
+                else
+                    carbon.fs = std::move(subCarbon.fs);
+            }
+
+            if (subCarbon.virtualGateway) {
+                if (carbon.virtualGateway)
+                    *(carbon.virtualGateway) += *(subCarbon.virtualGateway);
+                else
+                    carbon.virtualGateway = std::move(subCarbon.virtualGateway);
+            }
         }
 
         return carbon;

@@ -6,11 +6,12 @@
 #include "utils/logging/Logger.h"
 #include <map>
 #include <vector>
+#include "core/VirtualSystem.h"
 
 namespace CarbonLab {
 
 
-    class SubFileSystem {
+    class SubFileSystem : public VirtualSystem<SubFileSystem> {
     public:
         SubFileSystem(const fpath& virtualRoot, bool autoCleanup=true);
         SubFileSystem(const fpath& virtualRoot, const std::vector<VirtualFile>& files, bool autoCleanup=true);
@@ -27,6 +28,8 @@ namespace CarbonLab {
         void commit();
 
         FileComparator comparator(const fpath& file1, const fpath& file2);
+
+        void operator+= (SubFileSystem& other) override;
 
         friend class FsC14Parser;
     private:

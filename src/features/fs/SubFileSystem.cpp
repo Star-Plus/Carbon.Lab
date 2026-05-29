@@ -109,4 +109,10 @@ namespace CarbonLab {
     FileComparator SubFileSystem::comparator(const fpath& file1, const fpath& file2) {
         return FileComparator(virtualRoot / file1, virtualRoot / file2);
     }
+
+    void SubFileSystem::operator+= (SubFileSystem& other) {
+        for (auto& file : other.stagedFiles) {
+            addFile(file.second);
+        }
+    }
 }
