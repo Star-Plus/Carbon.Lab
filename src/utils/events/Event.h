@@ -1,23 +1,23 @@
 #pragma once
 
 #include "IEvent.h"
-#include "IListener.h"
+#include "Listener.h"
 #include <vector>
 #include <algorithm>
 
 namespace CarbonLab {
 
     template <typename TPayload>
-    class BaseEvent : public IEvent {
+    class Event : public IEvent {
     public:
-        virtual ~BaseEvent() = default;
+        virtual ~Event() = default;
 
-        void subscribe(IListener<TPayload>& listener) {
+        void subscribe(Listener<TPayload>& listener) {
             listeners.push_back(&listener);
             listener.setId(static_cast<unsigned int>(listeners.size()));
         }
 
-        void unsubscribe(IListener<TPayload>* listener) {
+        void unsubscribe(Listener<TPayload>* listener) {
             listeners.erase(
                 std::remove(listeners.begin(), listeners.end(), listener),
                 listeners.end()
@@ -31,6 +31,6 @@ namespace CarbonLab {
         }
 
     private:
-        std::vector<IListener<TPayload>*> listeners;
+        std::vector<Listener<TPayload>*> listeners;
     };
 }

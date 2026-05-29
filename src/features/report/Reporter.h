@@ -21,9 +21,7 @@ namespace CarbonLab {
             std::vector<str> stackTrace;
             str expected, actual;
             std::vector<str> logs;
-        };
-
-        
+        } failure;
     };
 
     class Reporter {
@@ -36,6 +34,8 @@ namespace CarbonLab {
             return instances[name];
         }
 
+        void serializeToMarkdown();
+        
     private:
         explicit Reporter(const str& name) {
             auto ctxPath = ContextPath::getExecutablePath();
@@ -52,6 +52,9 @@ namespace CarbonLab {
         str suiteName;
         std::vector<TestSheet> tests;
 
+        str os, arch, runtime;
+
+        std::map<str, str> deps;
 
     };
 
