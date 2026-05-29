@@ -3,18 +3,31 @@
 #include "core.h"
 #include <map>
 #include <memory>
+#include <vector>
+#include "utils/datetime/DateTime.h"
 #include "utils/logging/Logger.h"
 #include "utils/os/ContextPath.h"
+#include "core/TestStatus.enum.h"
 
 namespace CarbonLab {
 
-    enum class ReportType {
-        INFO, WARN, ERROR, DEBUG
+    struct TestSheet {
+        str testName;
+        DateTime startedAt, finishedAt;
+        TestStatus status;
+
+        struct Failure {
+            str message;
+            std::vector<str> stackTrace;
+            str expected, actual;
+            std::vector<str> logs;
+        };
+
+        
     };
 
     class Reporter {
     public:
-        void report(const str& message, const ReportType type = ReportType::INFO);
 
         static std::shared_ptr<Reporter> getInstance(const str& name) {
             if (instances.find(name) == instances.end()) {
@@ -33,6 +46,13 @@ namespace CarbonLab {
         std::shared_ptr<Logger> logger = nullptr;
 
         static std::map<str, std::shared_ptr<Reporter>> instances;
+
+        DateTime startedAt, finishedAt;
+
+        str suiteName;
+        std::vector<TestSheet> tests;
+
+
     };
 
 }
