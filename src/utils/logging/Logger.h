@@ -1,34 +1,36 @@
 #pragma once
 #include <memory>
-#include <string>
 #include <chrono>
 #include <fstream>
 #include <source_location>
 
 
 #include "Color.h"
+#include "core.h"
 
 namespace CarbonLab {
 
     class Logger {
     public:
         Logger();
-        Logger(std::string name="");
+        Logger(str name);
+        Logger(const fpath& path, str name);
 
-        void info(const std::string& message, const std::source_location& location = std::source_location::current()) const;
-        void warning(const std::string& message, const std::source_location& location = std::source_location::current()) const;
-        void error(const std::string& message, const std::source_location& location = std::source_location::current()) const;
-        void debug(const std::string& message, const std::source_location& location = std::source_location::current()) const;
+        Logger& info(const str& message, const std::source_location& location = std::source_location::current());
+        Logger& warning(const str& message, const std::source_location& location = std::source_location::current());
+        Logger& error(const str& message, const std::source_location& location = std::source_location::current());
+        Logger& debug(const str& message, const std::source_location& location = std::source_location::current());
 
-        void setCheckPoint(const std::string& message="");
+        Logger& log(const str& message, Color color = Color::WHITE, const std::source_location& location = std::source_location::current());
 
-        void log(const std::string& message, Color color = Color::WHITE, const std::source_location& location = std::source_location::current()) const;
-        void log(const std::wstring& message, Color color = Color::WHITE) const;
+        void showCallerLocation(bool show) { this->showLocation = show; }
 
     private:
-        std::string name;
+        str name;
         std::chrono::steady_clock::time_point checkPointTime;
         mutable std::shared_ptr<std::ofstream> logFile;
+
+        bool showLocation = true;
     };
 
 }

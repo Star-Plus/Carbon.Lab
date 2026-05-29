@@ -1,13 +1,15 @@
 #pragma once
+#include "core/VirtualSystem.h"
 #include "httplib.h"
 
 #include "models/MockNetworkData.h"
 #include <shared_mutex>
 #include <thread>
 #include <unordered_map>
+
 namespace CarbonLab {
 
-    class GatewayServer {
+    class GatewayServer : public VirtualSystem<GatewayServer> {
     public:
         GatewayServer() = default;
         ~GatewayServer() { stop(); }
@@ -19,6 +21,8 @@ namespace CarbonLab {
         void launch();
 
         std::unordered_map<str, std::set<MockNetworkData>>& getMockTable() { return mockTable; }
+
+        void operator += (GatewayServer& other);
 
     private:
         int port;

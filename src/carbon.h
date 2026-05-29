@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "core.h"
+#include "features/assertions/AssertionPool.h"
 #include "features/fs/SubFileSystem.h"
 #include "features/virtualGateway/GatewayServer.h"
 
@@ -15,15 +15,11 @@ class Carbon {
 public:
     std::unique_ptr<CarbonLab::SubFileSystem> fs = nullptr;
     std::unique_ptr<CarbonLab::GatewayServer> virtualGateway = nullptr;
+    
+    CarbonLab::AssertionPool assert;
 
-    static Carbon init(const fpath& c14Path);
+    static Carbon init(const std::filesystem::path& c14Path);
+    static Carbon init(const std::filesystem::path& c14Path, const std::string& unit);
 
     friend class CarbonLab::ConfigurationParser;
-
-private:
-
-    void setFs(CarbonLab::SubFileSystem fs) { this->fs = std::make_unique<CarbonLab::SubFileSystem>(fs); }
-    void setFs(std::unique_ptr<CarbonLab::SubFileSystem> fs) { this->fs = std::move(fs); }
-
-    void setVirtualGateway(std::unique_ptr<CarbonLab::GatewayServer> gateway) { this->virtualGateway = std::move(gateway); }
 };

@@ -2,7 +2,8 @@ name: fs-test
 
 fs:
   files:
-    - name: text.txt
+    - name: file2
+      vpath: file.txt
       seed_type: random
       seed_length: 30
       pre_run_write: true

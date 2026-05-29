@@ -1,32 +1,20 @@
 #pragma once
 
 #include "core.h"
-#include <stdlib.h>
+#include "core/VirtualSystem.h"
+#include <map>
 
 namespace CarbonLab {
 
-    class Environment {
+    class Environment : public VirtualSystem<Environment> {
     public:
-        static void set(const str& key, const str& value) {
-            #ifdef _WIN32
-            _putenv_s(key.c_str(), value.c_str());
-            #else
-            setenv(key.c_str(), value.c_str(), 1);
-            #endif
-        }
+        static void set(const str& key, const str& value);
+        static str get(const str& key);
+        static void remove(const str& key);
 
-        static str get(const str& key) {
-            const char* value = getenv(key.c_str());
-            return value ? value : "";
-        }
+        static std::map<str, str> list();
 
-        static void remove(const str& key) {
-            #ifdef _WIN32
-            _putenv_s(key.c_str(), "");
-            #else
-            unsetenv(key.c_str());
-            #endif
-        }
+        virtual void operator += (Environment& other);
     };
 
 }
