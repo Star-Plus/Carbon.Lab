@@ -1,0 +1,8 @@
+name: hello
+
+fs:
+  files:
+    - name: hello.txt
+      vpath: hello.txt
+      seed_type: random
+      seed_length: 30
