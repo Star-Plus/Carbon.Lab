@@ -5,8 +5,8 @@ package loader
 import (
 	"fmt"
 
+	symbols "github.com/Star-Plus/Carbon.Lab/ffi/golang/mod"
 	"github.com/ebitengine/purego"
-	symbols "github.com/starpg/carbon/mod"
 )
 
 func loadSymbols(path string) error {

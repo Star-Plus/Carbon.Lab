@@ -4,8 +4,8 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/starpg/carbon/internal/loader"
-	symbols "github.com/starpg/carbon/mod"
+	"github.com/Star-Plus/Carbon.Lab/ffi/golang/internal/loader"
+	symbols "github.com/Star-Plus/Carbon.Lab/ffi/golang/mod"
 )
 
 const errBufSize = 512

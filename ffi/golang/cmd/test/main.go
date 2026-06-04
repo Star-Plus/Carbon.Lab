@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/starpg/carbon"
+	carbon "github.com/Star-Plus/Carbon.Lab/ffi/golang"
 )
 
 func main() {

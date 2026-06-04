@@ -1,4 +1,4 @@
-module github.com/starpg/carbon
+module github.com/Star-Plus/Carbon.Lab/ffi/golang
 
 go 1.24.2
 

@@ -8,7 +8,7 @@ import (
 
 	"github.com/ebitengine/purego"
 
-	symbols "github.com/starpg/carbon/mod"
+	symbols "github.com/Star-Plus/Carbon.Lab/ffi/golang/mod"
 )
 
 func loadSymbols(path string) error {
