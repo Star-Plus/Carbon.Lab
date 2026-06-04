@@ -1,0 +1,64 @@
+name: Release build and publish
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-publish:
+    name: Build Carbon on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure and build on Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          cmake --preset VS2022-release
+          cmake --build --preset VS2022-release --config Release
+
+      - name: Configure and build on Linux
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+          cmake --build build --config Release
+
+      - name: Package shared library
+        id: package
+        shell: bash
+        run: |
+          set -e
+          mkdir -p release-artifacts
+
+          if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
+            src=$(find out/build build -type f -name 'Carbon.dll' 2>/dev/null | head -n 1)
+            artifact="release-artifacts/Carbon_windows_amd64.dll"
+          else
+            src=$(find build -type f -name 'libCarbon.so' 2>/dev/null | head -n 1)
+            artifact="release-artifacts/libCarbon_linux_amd64.so"
+          fi
+
+          if [[ -z "$src" ]]; then
+            echo "ERROR: shared library not found"
+            exit 1
+          fi
+
+          cp "$src" "$artifact"
+          echo "PACKAGE=$artifact" >> $GITHUB_OUTPUT
+
+      - name: Publish release asset
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ github.ref_name }}
+          artifacts: ${{ steps.package.outputs.PACKAGE }}
+          allowUpdates: true
+          omitBodyDuringUpdate: true
+          token: ${{ secrets.GITHUB_TOKEN }}
