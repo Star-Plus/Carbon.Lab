@@ -1,4 +1,4 @@
-# Test Report -
+# Test Report - ${suite.name}
 
 ## 1. Executive Summary
 
@@ -108,13 +108,11 @@ Duration  {run.duration_ms} ms
 
 ### Runtime
 
-| Property        | Value                                       |
-| --------------- | ------------------------------------------- |
-| OS              | `{env.os}` `{env.os_version}`           |
-| Architecture    | `{env.arch}`                              |
-| Runtime / SDK   | `{env.runtime}` `{env.runtime_version}` |
-| CI Runner       | `{env.ci_runner}`                         |
-| Container Image | `{env.docker_image}`                      |
+| Property      | Value                                       |
+| ------------- | ------------------------------------------- |
+| OS            | `{env.os}` `{env.os_version}`           |
+| Architecture  | `{env.arch}`                              |
+| Runtime / SDK | `{env.runtime}` `{env.runtime_version}` |
 
 ---
 

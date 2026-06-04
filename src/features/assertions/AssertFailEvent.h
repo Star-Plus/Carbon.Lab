@@ -1,7 +1,7 @@
 #pragma once
 
 #include "core.h"
-#include "utils/events/BaseEvent.h"
+#include "utils/events/Event.h"
 
 namespace CarbonLab {
 
@@ -10,5 +10,5 @@ namespace CarbonLab {
         str expected, actual;
     };
 
-    class AssertFailEvent : public BaseEvent<AssertFailEventPayload> {};
+    class AssertFailEvent : public Event<AssertFailEventPayload> {};
 }

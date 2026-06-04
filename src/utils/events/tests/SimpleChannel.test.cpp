@@ -1,4 +1,4 @@
-#include "utils/events/BaseEvent.h"
+#include "utils/events/Event.h"
 #include <gtest/gtest.h>
 
 using namespace CarbonLab;
@@ -7,7 +7,7 @@ struct PlayEventMessage {
     bool isPlaying;
 };
 
-class PlayEvent : public BaseEvent<PlayEventMessage> {};
+class PlayEvent : public Event<PlayEventMessage> {};
 class PlayEventListener : public IListener<PlayEventMessage> {
 
     void onEvent(PlayEventMessage payload) override {
