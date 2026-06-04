@@ -8,7 +8,7 @@ struct PlayEventMessage {
 };
 
 class PlayEvent : public Event<PlayEventMessage> {};
-class PlayEventListener : public IListener<PlayEventMessage> {
+class PlayEventListener : public Listener<PlayEventMessage> {
 
     void onEvent(PlayEventMessage payload) override {
         EXPECT_EQ(payload.isPlaying, true);
