@@ -1,3 +1,4 @@
+#include "features/apps/docker/parsers/DockerComposerC14Parser.h"
 #include "features/fs/SubFileSystem.h"
 #include "features/fs/parsers/FsC14Parser.h"
 #include "utils/logging/Logger.h"
@@ -22,6 +23,13 @@ namespace CarbonLab {
             HttpServiceMockParser parser;
             parsers.insert({ParserType::V_GS, std::make_unique<HttpServiceMockParser>(parser)});
         }
+
+        if (loadedYaml["apps"].IsDefined()) {
+            if (loadedYaml["apps"]["docker"].IsDefined()) {
+                DockerComposerC14Parser parser;
+                parsers.insert({ParserType::APPS_DOCKER, std::make_unique<DockerComposerC14Parser>(parser)});
+            }
+        }
     }
 
     Carbon ConfigurationParser::load(const str &unit) {
@@ -37,6 +45,11 @@ namespace CarbonLab {
         if (parsers.contains(ParserType::V_GS)){
             auto castedParser = static_cast<HttpServiceMockParser*>(parsers[ParserType::V_GS].get());
             carbon.virtualGateway = castedParser->parse(loadedYaml);
+        }
+
+        if (parsers.contains(ParserType::APPS_DOCKER)){
+            auto castedParser = static_cast<DockerComposerC14Parser*>(parsers[ParserType::APPS_DOCKER].get());
+            carbon.dockerApps = castedParser->parse(loadedYaml);
         }
 
         if (unit.empty()) {

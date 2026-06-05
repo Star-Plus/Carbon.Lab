@@ -2,6 +2,7 @@
 
 #include <memory>
 
+#include "features/apps/docker/DockerComposer.h"
 #include "features/assertions/AssertionPool.h"
 #include "features/fs/SubFileSystem.h"
 #include "features/virtualGateway/GatewayServer.h"
@@ -15,6 +16,7 @@ class Carbon {
 public:
     std::unique_ptr<CarbonLab::SubFileSystem> fs = nullptr;
     std::unique_ptr<CarbonLab::GatewayServer> virtualGateway = nullptr;
+    std::unique_ptr<CarbonLab::DockerComposer> dockerApps = nullptr;
     
     CarbonLab::AssertionPool assert;
 

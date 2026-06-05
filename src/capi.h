@@ -11,6 +11,8 @@ int carbon_fs_write(CarbonHandle handle, const char* filename, unsigned long lon
 int carbon_fs_trunc(CarbonHandle handle, const char* filename, unsigned long long delay, char* errBuf, int errBufSize);
 int carbon_fs_root(CarbonHandle handle, char* outBuf, int outLen);
 
+int carbon_app_connect(CarbonHandle handle, char* appName, char* outBuf, int outLen);
+
 #ifdef __cplusplus
 }
 #endif

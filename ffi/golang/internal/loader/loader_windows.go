@@ -26,6 +26,7 @@ func loadSymbols(path string) error {
 	purego.RegisterLibFunc(&symbols.FnCarbonFsWrite, handle, "carbon_fs_write")
 	purego.RegisterLibFunc(&symbols.FnCarbonFsTrunc, handle, "carbon_fs_trunc")
 	purego.RegisterLibFunc(&symbols.FnCarbonFsRoot, handle, "carbon_fs_root")
+	purego.RegisterLibFunc(&symbols.FnCarbonAppConnect, handle, "carbon_app_connect")
 
 	return nil
 }
