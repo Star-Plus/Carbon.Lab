@@ -20,12 +20,13 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Setup MSVC
+        if: matrix.os == 'windows-latest'
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Configure and build on Windows
         if: matrix.os == 'windows-latest'
         run: |
-          cmake -S . -B out/build/windows -G "Ninja" -A x64
+          cmake -S . -B out/build/windows -G "Ninja" -DCMAKE_BUILD_TYPE=Release
           cmake --build out/build/windows --config Release
 
       - name: Configure and build on Linux
