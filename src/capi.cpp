@@ -85,3 +85,21 @@ int carbon_fs_root(CarbonHandle handle, char* outBuf, int outLen) {
         return -1;
     }
 }
+
+int carbon_apps_connect(CarbonHandle handle, char* appName, char* outBuf, int outLen) {
+    if (!handle) {
+        return -1;
+    }
+
+    Carbon* carbon = (Carbon*)handle;
+    try {
+        auto root = carbon->dockerApps->connect(appName);
+        if (outBuf && outLen > 0) {
+            strncpy_s(outBuf, outLen, root.c_str(), outLen - 1);
+            outBuf[outLen - 1] = '\0';
+        }
+        return 0;
+    } catch (const std::exception& e) {
+        return -1;
+    }
+}
