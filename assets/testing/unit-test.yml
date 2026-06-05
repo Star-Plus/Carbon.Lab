@@ -6,6 +6,7 @@ fs:
       vpath: parent.txt
       seed_type: random
       seed_length: 30
+      pre_run_write: true
 
 units:
   case1:
