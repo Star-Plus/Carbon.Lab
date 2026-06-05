@@ -22,8 +22,8 @@ jobs:
       - name: Configure and build on Windows
         if: matrix.os == 'windows-latest'
         run: |
-          cmake --preset VS2022-release
-          cmake --build --preset VS2022-release --config Release
+          cmake -S . -B out/build/VS2022 -G "Visual Studio 17 2022" -A x64
+          cmake --build out/build/VS2022 --config Release
 
       - name: Configure and build on Linux
         if: matrix.os == 'ubuntu-latest'
@@ -39,7 +39,7 @@ jobs:
           mkdir -p release-artifacts
 
           if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-            src=$(find out/build build -type f -name 'Carbon.dll' 2>/dev/null | head -n 1)
+            src=$(find out/build/VS2022 build -type f -name 'Carbon.dll' 2>/dev/null | head -n 1)
             artifact="release-artifacts/Carbon_windows_amd64.dll"
           else
             src=$(find build -type f -name 'libCarbon.so' 2>/dev/null | head -n 1)
