@@ -10,7 +10,11 @@ CarbonHandle init_carbon(const char* config_path, char* errBuf, int errBufSize) 
         return (CarbonHandle)carbon;
     } catch (const std::exception& e) {
         if (errBuf && errBufSize > 0) {
+            #ifdef _WIN32
             strncpy_s(errBuf, errBufSize, e.what(), errBufSize - 1);
+            #else
+            strncpy(errBuf, e.what(), errBufSize - 1);
+            #endif
             errBuf[errBufSize - 1] = '\0';
         }
         return nullptr;
@@ -27,7 +31,11 @@ void free_carbon(CarbonHandle handle) {
 int carbon_fs_write(CarbonHandle handle, const char* filename, unsigned long long delay, char* errBuf, int errBufSize) {
     if (!handle) {
         if (errBuf && errBufSize > 0) {
+            #ifdef _WIN32
             strncpy_s(errBuf, errBufSize, "Invalid Carbon handle", errBufSize - 1);
+            #else
+            strncpy(errBuf, "Invalid Carbon handle", errBufSize - 1);
+            #endif
             errBuf[errBufSize - 1] = '\0';
         }
         return -1;
@@ -39,7 +47,11 @@ int carbon_fs_write(CarbonHandle handle, const char* filename, unsigned long lon
         return 0;
     } catch (const std::exception& e) {
         if (errBuf && errBufSize > 0) {
+            #ifdef _WIN32
             strncpy_s(errBuf, errBufSize, e.what(), errBufSize - 1);
+            #else
+            strncpy(errBuf, e.what(), errBufSize - 1);
+            #endif
             errBuf[errBufSize - 1] = '\0';
         }
         return -1;
@@ -49,7 +61,11 @@ int carbon_fs_write(CarbonHandle handle, const char* filename, unsigned long lon
 int carbon_fs_trunc(CarbonHandle handle, const char* filename, unsigned long long delay, char* errBuf, int errBufSize) {
     if (!handle) {
         if (errBuf && errBufSize > 0) {
+            #ifdef _WIN32
             strncpy_s(errBuf, errBufSize, "Invalid Carbon handle", errBufSize - 1);
+            #else
+            strncpy(errBuf, "Invalid Carbon handle", errBufSize - 1);
+            #endif
             errBuf[errBufSize - 1] = '\0';
         }
         return -1;
@@ -61,7 +77,11 @@ int carbon_fs_trunc(CarbonHandle handle, const char* filename, unsigned long lon
         return 0;
     } catch (const std::exception& e) {
         if (errBuf && errBufSize > 0) {
+            #ifdef _WIN32
             strncpy_s(errBuf, errBufSize, e.what(), errBufSize - 1);
+            #else
+            strncpy(errBuf, e.what(), errBufSize - 1);
+            #endif
             errBuf[errBufSize - 1] = '\0';
         }
         return -1;
@@ -77,7 +97,11 @@ int carbon_fs_root(CarbonHandle handle, char* outBuf, int outLen) {
     try {
         auto root = carbon->fs->root();
         if (outBuf && outLen > 0) {
+            #ifdef _WIN32
             strncpy_s(outBuf, outLen, root.string().c_str(), outLen - 1);
+            #else
+            strncpy(outBuf, root.string().c_str(), outLen - 1);
+            #endif
             outBuf[outLen - 1] = '\0';
         }
         return 0;
@@ -95,13 +119,21 @@ int carbon_app_connect(CarbonHandle handle, char* appName, char* outBuf, int out
     try {
         auto root = carbon->dockerApps->connect(appName);
         if (outBuf && outLen > 0) {
+            #ifdef _WIN32
             strncpy_s(outBuf, outLen, root.c_str(), outLen - 1);
+            #else
+            strncpy(outBuf, root.c_str(), outLen - 1);
+            #endif
             outBuf[outLen - 1] = '\0';
         }
         return 0;
     } catch (const std::exception& e) {
         if (errBuf && errBufSize > 0) {
+            #ifdef _WIN32
             strncpy_s(errBuf, errBufSize, e.what(), errBufSize - 1);
+            #else
+            strncpy(errBuf, e.what(), errBufSize - 1);
+            #endif
             errBuf[errBufSize - 1] = '\0';
         }
         return -1;
