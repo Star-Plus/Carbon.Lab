@@ -3,6 +3,11 @@
 #include <map>
 #include <stdlib.h>
 
+#ifndef _WIN32
+#include <unistd.h>
+extern char** environ;
+#endif
+
 namespace CarbonLab {
 
      void Environment::set(const str& key, const str& value) {
@@ -28,12 +33,24 @@ namespace CarbonLab {
 
     std::map<str, str> Environment::list() {
         std::map<str, str> result;
+
+    #if defined(_WIN32)
         char** env = environ;
         while (*env) {
-            str key = *env++;
-            str value = *env++;
-            result[key] = value;
+            str entry = *env++;
+            auto pos = entry.find('=');
+            if (pos != str::npos)
+                result[entry.substr(0, pos)] = entry.substr(pos + 1);
         }
+    #else
+        // Linux / macOS: each entry is "KEY=VALUE"
+        for (char** env = environ; *env; ++env) {
+            str entry = *env;
+            auto pos = entry.find('=');
+            if (pos != str::npos)
+                result[entry.substr(0, pos)] = entry.substr(pos + 1);
+        }
+    #endif
         return result;
     }
 

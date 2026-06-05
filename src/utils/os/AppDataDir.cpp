@@ -7,6 +7,7 @@
     #include <cstdlib>
     #include <pwd.h>
     #include <sys/types.h>
+    #include <unistd.h>
 #endif
 
 namespace CarbonLab::OS::AppData {
