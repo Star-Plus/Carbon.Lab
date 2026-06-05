@@ -29,5 +29,5 @@ var (
 	// The root path is written into outBuf.
 	FnCarbonFsRoot func(handle uintptr, outBuf *byte, outLen int32) int32
 
-	FnCarbonAppConnect func(handle uintptr, appName string, outBuf *byte, outLen int32) int32
+	FnCarbonAppConnect func(handle uintptr, appName string, outBuf *byte, outLen int32, errBuf *byte, errBufSize int32) int32
 )

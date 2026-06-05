@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	c, err := carbon.Init("cmd/test/carbon.c14")
+	c, err := carbon.Init("carbon.c14")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -20,5 +20,9 @@ func main() {
 	}
 
 	fmt.Println("fs root: ", root)
-
+	connection, err := c.Apps().Connect("test")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println("app connection: ", connection)
 }
