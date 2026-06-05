@@ -86,7 +86,7 @@ int carbon_fs_root(CarbonHandle handle, char* outBuf, int outLen) {
     }
 }
 
-int carbon_app_connect(CarbonHandle handle, char* appName, char* outBuf, int outLen) {
+int carbon_app_connect(CarbonHandle handle, char* appName, char* outBuf, int outLen, char* errBuf, int errBufSize) {
     if (!handle) {
         return -1;
     }
@@ -100,6 +100,10 @@ int carbon_app_connect(CarbonHandle handle, char* appName, char* outBuf, int out
         }
         return 0;
     } catch (const std::exception& e) {
+        if (errBuf && errBufSize > 0) {
+            strncpy_s(errBuf, errBufSize, e.what(), errBufSize - 1);
+            errBuf[errBufSize - 1] = '\0';
+        }
         return -1;
     }
 }

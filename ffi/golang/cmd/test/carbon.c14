@@ -6,3 +6,9 @@ fs:
       vpath: hello.txt
       seed_type: random
       seed_length: 30
+
+apps:
+  docker:
+    - name: test
+      image: alpine
+      min_lifetime: 100

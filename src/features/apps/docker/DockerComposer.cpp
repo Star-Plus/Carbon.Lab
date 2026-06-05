@@ -66,6 +66,8 @@ namespace CarbonLab {
             return;
         }
 
+        logger.debug("Running app " + req.name + "...");
+
         int result = system(("docker run -d --name " + req.name + " " + req.image + " sleep " + std::to_string(req.minLifetime)).c_str());
 
         if (result != 0) {

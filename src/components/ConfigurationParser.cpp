@@ -48,6 +48,7 @@ namespace CarbonLab {
         }
 
         if (parsers.contains(ParserType::APPS_DOCKER)){
+            logger.debug("Docker apps parser starting...");
             auto castedParser = static_cast<DockerComposerC14Parser*>(parsers[ParserType::APPS_DOCKER].get());
             carbon.dockerApps = castedParser->parse(loadedYaml);
         }

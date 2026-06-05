@@ -13,6 +13,9 @@ Carbon Carbon::init(const std::filesystem::path& c14Path) {
     if (carbon.fs)
         carbon.fs->commit();
 
+    if (carbon.dockerApps)
+        carbon.dockerApps->commit();
+
     return carbon;
 }
 
@@ -26,6 +29,9 @@ Carbon Carbon::init(const std::filesystem::path& c14Path, const std::string& uni
     
     if (carbon.fs)
         carbon.fs->commit();
+
+    if (carbon.dockerApps)
+        carbon.dockerApps->commit();
 
     return carbon;
 }
