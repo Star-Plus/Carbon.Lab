@@ -86,7 +86,7 @@ int carbon_fs_root(CarbonHandle handle, char* outBuf, int outLen) {
     }
 }
 
-int carbon_apps_connect(CarbonHandle handle, char* appName, char* outBuf, int outLen) {
+int carbon_app_connect(CarbonHandle handle, char* appName, char* outBuf, int outLen) {
     if (!handle) {
         return -1;
     }
