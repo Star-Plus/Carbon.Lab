@@ -10,7 +10,8 @@
 namespace CarbonLab {
 
     enum class ParserType {
-        FS, V_GS
+        FS, V_GS,
+        APPS_DOCKER
     };
 
     class ConfigurationParser {
