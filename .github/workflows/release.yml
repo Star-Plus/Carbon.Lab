@@ -13,7 +13,6 @@ jobs:
     name: Build Carbon on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}
     strategy:
-      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
 
@@ -27,14 +26,14 @@ jobs:
       - name: Configure and build on Windows
         if: matrix.os == 'windows-latest'
         run: |
-          cmake -S . -B out/build/windows -G "Ninja" -DCMAKE_BUILD_TYPE=Release
-          cmake --build out/build/windows --config Release
+          cmake --preset windows-release
+          cmake --build --preset windows-release
 
       - name: Configure and build on Linux
         if: matrix.os == 'ubuntu-latest'
         run: |
-          cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
-          cmake --build build --config Release
+          cmake --preset linux-release
+          cmake --build --preset linux-release
 
       - name: Package shared library
         id: package
@@ -44,10 +43,10 @@ jobs:
           mkdir -p release-artifacts
 
           if [[ "${{ matrix.os }}" == "windows-latest" ]]; then
-            src=$(find out/build/windows build -type f -name 'Carbon.dll' 2>/dev/null | head -n 1)
+            src=$(find out/build/windows-release -type f -name 'Carbon.dll' 2>/dev/null | head -n 1)
             artifact="release-artifacts/Carbon_windows_amd64.dll"
           else
-            src=$(find build -type f -name 'libCarbon.so' 2>/dev/null | head -n 1)
+            src=$(find out/build/linux-release -type f -name 'libCarbon.so' 2>/dev/null | head -n 1)
             artifact="release-artifacts/libCarbon_linux_amd64.so"
           fi
 
