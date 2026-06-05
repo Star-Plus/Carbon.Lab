@@ -30,6 +30,26 @@
                 "value": "host=x64",
                 "strategy": "external"
             }
+        },
+        {
+            "name": "linux-release",
+            "displayName": "Linux Release",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++"
+            }
+        },
+        {
+            "name": "windows-release",
+            "displayName": "Windows Release",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
         }
     ],
     "buildPresets": [
@@ -55,6 +75,18 @@
             "name": "mingw-release",
             "displayName": "MinGW - Release",
             "configurePreset": "mingw",
+            "configuration": "Release"
+        },
+        {
+            "name": "linux-release",
+            "displayName": "Linux Release",
+            "configurePreset": "linux-release",
+            "configuration": "Release"
+        },
+        {
+            "name": "windows-release",
+            "displayName": "Windows Release",
+            "configurePreset": "windows-release",
             "configuration": "Release"
         }
     ],
