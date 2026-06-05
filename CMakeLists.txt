@@ -90,7 +90,7 @@ add_executable(CarbonTests
   ${GLOBAL_TESTING_FILES}
 )
 
-target_compile_options(CarbonTests PRIVATE -Wno-cpp)
+target_compile_options(CarbonTests PRIVATE $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wno-cpp>)
 target_link_libraries(CarbonTests PRIVATE Carbon)
 
 gtest_discover_tests(CarbonTests)
