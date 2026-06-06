@@ -68,7 +68,12 @@ namespace CarbonLab {
 
         logger.debug("Running app " + req.name + "...");
 
-        int result = system(("docker run -d --name " + req.name + " " + req.image + " sleep " + std::to_string(req.minLifetime)).c_str());
+        str randomPortMappingArgument = "-p ";
+        for (auto& port : req.ports) {
+            randomPortMappingArgument += std::to_string(port.second) + " ";
+        }
+
+        int result = system(("docker run -d " + randomPortMappingArgument + "--name " + req.name + " " + req.image + " sleep " + std::to_string(req.minLifetime)).c_str());
 
         if (result != 0) {
             throw std::runtime_error("Failed to run app: " + req.name);

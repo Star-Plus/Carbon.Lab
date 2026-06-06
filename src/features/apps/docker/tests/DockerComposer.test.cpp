@@ -22,4 +22,7 @@ TEST(DockerComposerTest, SimpleImageLaunch) {
 
     ASSERT_FALSE(composer.connect("test", "net").empty());
     ASSERT_NE(composer.connect("test", "net"), "test");
+    ASSERT_NE(composer.connect("test", "net"), "test:0");
+
+    std::cout << composer.connect("test", "net") << std::endl;
 }
