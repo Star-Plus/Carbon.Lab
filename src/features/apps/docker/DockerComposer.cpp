@@ -68,9 +68,9 @@ namespace CarbonLab {
 
         logger.debug("Running app " + req.name + "...");
 
-        str randomPortMappingArgument = "-p ";
+        str randomPortMappingArgument = "";
         for (auto& port : req.ports) {
-            randomPortMappingArgument += std::to_string(port.second) + " ";
+            randomPortMappingArgument += "-p " + std::to_string(port.second) + " ";
         }
 
         int result = system(("docker run -d " + randomPortMappingArgument + "--name " + req.name + " " + req.image + " sleep " + std::to_string(req.minLifetime)).c_str());
