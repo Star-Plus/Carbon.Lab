@@ -11,7 +11,7 @@ import (
 	"sync"
 )
 
-const Version = "v1.1.0"
+const Version = "v1.1.1"
 
 const githubRepo = "Star-Plus/Carbon.Lab"
 
