@@ -5,6 +5,13 @@ if(WIN32)
     add_compile_definitions(_WIN32_WINNT=0x0A00)
 endif()
 
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY         ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY         ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY         ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/lib)
+
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -80,8 +87,6 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(googletest)
 
-target_link_libraries(Carbon PUBLIC GTest::gtest_main)
-
 enable_testing()
 include(GoogleTest)
 
@@ -91,7 +96,7 @@ add_executable(CarbonTests
 )
 
 target_compile_options(CarbonTests PRIVATE $<$<NOT:$<CXX_COMPILER_ID:MSVC>>:-Wno-cpp>)
-target_link_libraries(CarbonTests PRIVATE Carbon)
+target_link_libraries(CarbonTests PRIVATE Carbon gtest gtest_main)
 
 gtest_discover_tests(CarbonTests)
 
