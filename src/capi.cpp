@@ -110,14 +110,14 @@ int carbon_fs_root(CarbonHandle handle, char* outBuf, int outLen) {
     }
 }
 
-int carbon_app_connect(CarbonHandle handle, char* appName, char* outBuf, int outLen, char* errBuf, int errBufSize) {
+int carbon_app_connect(CarbonHandle handle, char* appName, char* port, char* outBuf, int outLen, char* errBuf, int errBufSize) {
     if (!handle) {
         return -1;
     }
 
     Carbon* carbon = (Carbon*)handle;
     try {
-        auto root = carbon->dockerApps->connect(appName);
+        auto root = carbon->dockerApps->connect(appName, port);
         if (outBuf && outLen > 0) {
             #ifdef _WIN32
             strncpy_s(outBuf, outLen, root.c_str(), outLen - 1);

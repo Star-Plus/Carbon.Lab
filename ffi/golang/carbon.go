@@ -90,7 +90,17 @@ func cStr(b []byte) string {
 func (a *Apps) Connect(appName string) (string, error) {
 	var errBuf [errBufSize]byte
 	var outBuf [1024]byte
-	rc := symbols.FnCarbonAppConnect(a.handle, appName, &outBuf[0], int32(len(outBuf)), &errBuf[0], errBufSize)
+	rc := symbols.FnCarbonAppConnect(a.handle, appName, "", &outBuf[0], int32(len(outBuf)), &errBuf[0], errBufSize)
+	if rc != 0 {
+		return "", fmt.Errorf("carbon: apps.Connect failed: %s", cStr(errBuf[:]))
+	}
+	return cStr(outBuf[:]), nil
+}
+
+func (a *Apps) ConnectOnPort(appName, port string) (string, error) {
+	var errBuf [errBufSize]byte
+	var outBuf [1024]byte
+	rc := symbols.FnCarbonAppConnect(a.handle, appName, port, &outBuf[0], int32(len(outBuf)), &errBuf[0], errBufSize)
 	if rc != 0 {
 		return "", fmt.Errorf("carbon: apps.Connect failed: %s", cStr(errBuf[:]))
 	}
