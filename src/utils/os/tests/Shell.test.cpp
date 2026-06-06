@@ -3,5 +3,5 @@
 
 TEST(ShellTest, SimpleCoutOfCommand) {
     auto cout = CarbonLab::OS::Shell::exec("echo hello world");
-    ASSERT_EQ(cout, "hello world\n");
+    ASSERT_EQ(cout, "hello world");
 }
