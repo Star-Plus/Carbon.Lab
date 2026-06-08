@@ -33,11 +33,11 @@ TEST_F(ParseFsTest, ParseStageFiles) {
 
     auto file = fs->files()[0];
 
-    EXPECT_EQ(file.filename, "text.txt");
+    EXPECT_EQ(file.filename, "file2");
     EXPECT_EQ(file.seedType, CarbonLab::SeedType::Random);
 }
 
 TEST_F(ParseFsTest, CommitFsAfterParsing) {
     auto fs = fsParser->parse(parser->getYaml());
-    EXPECT_TRUE(std::filesystem::exists(fs->root() / "text.txt"));
+    EXPECT_TRUE(std::filesystem::exists(fs->root() / "file.txt"));
 }

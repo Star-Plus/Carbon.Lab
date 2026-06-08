@@ -2,6 +2,7 @@
 
 #include "core.h"
 #include "features/apps/docker/models/DockerApp.h"
+#include "utils/logging/Logger.h"
 #include "yaml-cpp/node/node.h"
 #include <map>
 
@@ -11,8 +12,13 @@ namespace YAML {
     template<>
     struct convert<CarbonLab::DockerAppRequest> {
         static bool decode(const Node& node, CarbonLab::DockerAppRequest& rhs) {
-            if (node["ports"].IsDefined()) 
+            if (node["ports"].IsDefined() && node["ports"].IsMap()) {
+                Logger("DockerAppC14Definition").debug("Parsing ports");
                 rhs.ports = node["ports"].as<std::map<str, int>>();
+                for (auto& port : rhs.ports) {
+                    Logger("DockerAppC14Definition").debug("Port: " + port.first + ":" + std::to_string(port.second));
+                }
+            }
 
             if (node["env"].IsDefined())
                 rhs.env = node["env"].as<std::map<str, str>>();

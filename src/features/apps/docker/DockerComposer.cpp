@@ -16,12 +16,16 @@ namespace CarbonLab {
         if (!dependencyCheck()) {
             throw std::runtime_error("Docker is not installed or not reachable Please make sure Docker is available.");
         }
+
+        Docker::launchDocker();
     }
 
     DockerComposer::DockerComposer(const std::vector<DockerAppRequest>& apps) {
         if (!dependencyCheck()) {
             throw std::runtime_error("Docker is not installed or not reachable Please make sure Docker is available.");
         }
+
+        Docker::launchDocker();
 
         for (auto& app : apps) {
             requests.push(std::make_shared<DockerAppRequest>(app));
@@ -73,7 +77,12 @@ namespace CarbonLab {
             randomPortMappingArgument += "-p " + std::to_string(port.second) + " ";
         }
 
-        int result = system(("docker run -d " + randomPortMappingArgument + "--name " + req.name + " " + req.image + " sleep " + std::to_string(req.minLifetime)).c_str());
+        str runCmd = "docker run -d " + randomPortMappingArgument + "--name " + req.name + " " + req.image;
+        if (req.minLifetime > 0) {
+            runCmd += " sleep " + std::to_string(req.minLifetime);
+        }
+
+        int result = system(runCmd.c_str());
 
         if (result != 0) {
             throw std::runtime_error("Failed to run app: " + req.name);

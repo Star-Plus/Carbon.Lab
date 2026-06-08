@@ -55,4 +55,22 @@ namespace CarbonLab::Docker {
             return {};
         }
     }
+
+    void launchDocker() {
+        try {
+            int result = system("docker info > /dev/null 2>&1");
+    
+            if (result != 0) {
+                #ifdef _WIN32
+                    system("docker desktop start");
+                #elif defined(__linux__)
+                    system("sudo systemctl start docker");
+                #endif
+            }
+        }
+        catch (std::exception& e) {
+            Logger("ContainerUtils").log("Failed to launch docker: " + std::string(e.what()), Color::RED);
+            throw e;
+        }
+    }
 }

@@ -1,0 +1,9 @@
+name: Branch MockDgraph
+
+apps:
+  docker:
+    - name: dgraph
+      image: dgraph/standalone:latest
+      ports:
+        ql: 8080
+        grpc: 9080
