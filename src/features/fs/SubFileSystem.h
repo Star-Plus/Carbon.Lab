@@ -17,6 +17,7 @@ namespace CarbonLab {
         SubFileSystem(const fpath& virtualRoot, const std::vector<VirtualFile>& files, bool autoCleanup=true);
         ~SubFileSystem();
 
+        fpath file(const str& filename) const;
         void write(const str& filename, const uint64_t delay=0);
         void trunc(const str& filename, const uint64_t delay=0);
 

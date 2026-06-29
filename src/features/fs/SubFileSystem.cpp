@@ -81,6 +81,16 @@ namespace CarbonLab {
         }
     }
 
+    fpath SubFileSystem::file(const str& filename) const {
+        auto file = stagedFiles.find(filename);
+
+        if (file == stagedFiles.end()) {
+            throw std::runtime_error("File not found: " + filename);
+        }
+
+        return virtualRoot / file->second.virtualPath;
+    }
+
     void SubFileSystem::writeFile(const VirtualFile& file) {
         std::filesystem::create_directories(virtualRoot / file.virtualPath.parent_path());
 
