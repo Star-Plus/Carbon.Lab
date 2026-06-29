@@ -30,8 +30,6 @@ namespace CarbonLab {
             for (auto& file : files) {
                 stagedFiles.insert({file.filename, file});
             }
-
-            commit();
         }
 
     SubFileSystem::~SubFileSystem() {
