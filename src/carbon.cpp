@@ -16,7 +16,7 @@ Carbon Carbon::init(const std::filesystem::path& c14Path) {
     if (carbon.dockerApps)
         carbon.dockerApps->commit();
 
-    return carbon;
+    return std::move(carbon);
 }
 
 Carbon Carbon::init(const std::filesystem::path& c14Path, const std::string& unit) {
@@ -33,5 +33,5 @@ Carbon Carbon::init(const std::filesystem::path& c14Path, const std::string& uni
     if (carbon.dockerApps)
         carbon.dockerApps->commit();
 
-    return carbon;
+    return std::move(carbon);
 }

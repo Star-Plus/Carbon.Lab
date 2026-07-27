@@ -1,3 +1,0 @@
-CompileFlags:
-  CompilationDatabase: out/mingw/compile_commands.json
-  Add: [-Iinclude]

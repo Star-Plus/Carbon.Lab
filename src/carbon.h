@@ -15,6 +15,15 @@ namespace CarbonLab {
 class CARBON_EXPORT Carbon {
 
 public:
+
+    Carbon() = default;
+
+    Carbon(Carbon&&) = default;
+    Carbon& operator=(Carbon&&) = default;
+
+    Carbon(const Carbon&) = delete;
+    Carbon& operator=(const Carbon&) = delete;
+
     std::unique_ptr<CarbonLab::SubFileSystem> fs = nullptr;
     std::unique_ptr<CarbonLab::GatewayServer> virtualGateway = nullptr;
     std::unique_ptr<CarbonLab::DockerComposer> dockerApps = nullptr;
