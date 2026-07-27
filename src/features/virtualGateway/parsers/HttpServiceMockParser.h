@@ -4,10 +4,11 @@
 #include "features/virtualGateway/GatewayServer.h"
 #include "yaml-cpp/node/node.h"
 #include <memory>
+#include "CarbonExport.h"
 
 namespace CarbonLab {
 
-    class HttpServiceMockParser : public C14Parser<GatewayServer> {
+    class CARBON_EXPORT HttpServiceMockParser : public C14Parser<GatewayServer> {
     public:
         std::unique_ptr<GatewayServer> parse(const YAML::Node& node) override;
     };

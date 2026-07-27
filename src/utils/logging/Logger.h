@@ -7,10 +7,11 @@
 
 #include "Color.h"
 #include "core.h"
+#include "CarbonExport.h"
 
 namespace CarbonLab {
 
-    class Logger {
+    class CARBON_EXPORT Logger {
     public:
         Logger();
         Logger(str name);

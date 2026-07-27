@@ -1,5 +1,5 @@
 {
-    "version": 3,
+    "version": 6,
     "configurePresets": [
         {
             "name": "mingw",
@@ -12,58 +12,82 @@
             }
         },
         {
-            "name": "VS2022",
-            "displayName": "Visual Studio Community 2022 Release - amd64",
-            "description": "Using compilers for Visual Studio 17 2022 (x64 architecture)",
-            "generator": "Visual Studio 17 2022",
-            "binaryDir": "${sourceDir}/out/build/${presetName}",
-            "cacheVariables": {
-                "CMAKE_INSTALL_PREFIX": "${sourceDir}/out/install/${presetName}",
-                "CMAKE_C_COMPILER": "cl.exe",
-                "CMAKE_CXX_COMPILER": "cl.exe"
-            },
-            "architecture": {
-                "value": "x64",
-                "strategy": "external"
-            },
-            "toolset": {
-                "value": "host=x64",
-                "strategy": "external"
-            }
-        },
-        {
-            "name": "linux-release",
-            "displayName": "Linux Release",
+            "name": "mingw-release",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "binaryDir": "${sourceDir}/out/${presetName}",
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_BUILD_TYPE":"Release",
                 "CMAKE_C_COMPILER": "gcc",
                 "CMAKE_CXX_COMPILER": "g++"
             }
         },
         {
-            "name": "windows-release",
-            "displayName": "Windows Release",
+            "name": "msvc-debug",
+            "displayName": "MSVC - Debug",
+            "description": "Using MSVC compiler with Ninja generator",
             "generator": "Ninja",
-            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "binaryDir": "${sourceDir}/out/${presetName}",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "toolset": {
+                "value": "v143",
+                "strategy": "external"
+            },
             "cacheVariables": {
-                "CMAKE_BUILD_TYPE": "Release"
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "msvc-release",
+            "displayName": "MSVC - Release",
+            "description": "Using MSVC compiler with Ninja generator",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/out/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_C_COMPILER": "cl.exe",
+                "CMAKE_CXX_COMPILER": "cl.exe"
+            }
+        },
+        {
+            "name": "windows-cross-release",
+            "displayName": "Windows Cross-Compile - Release",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/out/${presetName}",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_SYSTEM_NAME": "Windows",
+                "CMAKE_C_COMPILER": "x86_64-w64-mingw32-gcc",
+                "CMAKE_CXX_COMPILER": "x86_64-w64-mingw32-g++"
+            }
+        },
+        {
+            "name": "linux-release",
+            "displayName": "Linux Native Release (GCC)",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/out/linux-release",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release",
+                "CMAKE_C_COMPILER": "gcc",
+                "CMAKE_CXX_COMPILER": "g++"
             }
         }
     ],
     "buildPresets": [
         {
-            "name": "VS2022-debug",
+            "name": "msvc-debug",
             "displayName": "Visual Studio Community 2022 Release - amd64 - Debug",
-            "configurePreset": "VS2022",
+            "configurePreset": "msvc-debug",
             "configuration": "Debug"
         },
         {
-            "name": "VS2022-release",
+            "name": "msvc-release",
             "displayName": "Visual Studio Community 2022 Release - amd64 - Release",
-            "configurePreset": "VS2022",
-            "configuration": "Release"
+            "configurePreset": "msvc-release",
+            "configuration": "Release",
+            "jobs": 2
         },
         {
             "name": "mingw-debug",
@@ -74,27 +98,30 @@
         {
             "name": "mingw-release",
             "displayName": "MinGW - Release",
-            "configurePreset": "mingw",
-            "configuration": "Release"
+            "configurePreset": "mingw-release",
+            "configuration": "Release",
+            "jobs": 2
+        },
+        {
+            "name": "windows-cross-release",
+            "displayName": "Build Windows Cross-Compile - Release",
+            "configurePreset": "windows-cross-release",
+            "configuration": "Release",
+            "jobs": 2
         },
         {
             "name": "linux-release",
-            "displayName": "Linux Release",
+            "displayName": "Linux Native Release (GCC)",
             "configurePreset": "linux-release",
-            "configuration": "Release"
-        },
-        {
-            "name": "windows-release",
-            "displayName": "Windows Release",
-            "configurePreset": "windows-release",
-            "configuration": "Release"
+            "configuration": "Release",
+            "jobs": 2
         }
     ],
     "testPresets": [
         {
-            "name": "VS2022-debug",
+            "name": "msvc-debug",
             "displayName": "Run Tests - Debug",
-            "configurePreset": "VS2022",
+            "configurePreset": "msvc-debug",
             "configuration": "Debug",
             "output": {
                 "outputOnFailure": true
@@ -105,9 +132,9 @@
             }
         },
         {
-            "name": "VS2022-release",
+            "name": "msvc-release",
             "displayName": "Run Tests - Release",
-            "configurePreset": "VS2022",
+            "configurePreset": "msvc-release",
             "configuration": "Release",
             "output": {
                 "outputOnFailure": true

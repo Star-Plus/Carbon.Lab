@@ -1,3 +1,5 @@
+#include "CarbonExport.h"
+
 namespace Split {
 
     enum class TimeUnit {
@@ -6,5 +8,5 @@ namespace Split {
         SECONDS
     };
 
-    double convertTime(double , TimeUnit, TimeUnit);
+    CARBON_EXPORT double convertTime(double , TimeUnit, TimeUnit);
 }

@@ -2,9 +2,10 @@
 
 #include "core.h"
 #include "utils/SHA1.h"
+#include "CarbonExport.h"
 
 namespace CarbonLab {
-    struct MockResponse {
+    struct CARBON_EXPORT MockResponse {
         int statusCode;
         str contentType;
         str body;
@@ -26,7 +27,7 @@ namespace CarbonLab {
         str hash;
     };
 
-    struct MockRequest {
+    struct CARBON_EXPORT MockRequest {
         str method;
         str url;
         str body;
@@ -49,7 +50,7 @@ namespace CarbonLab {
         str hash;
     };
 
-    struct MockNetworkData {
+    struct CARBON_EXPORT MockNetworkData {
         MockRequest request;
         MockResponse response;
 

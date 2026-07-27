@@ -1,5 +1,7 @@
 #pragma once
 
+#include "CarbonExport.h"
+
 namespace CarbonLab {
     enum class Color {
         RED,
@@ -13,5 +15,5 @@ namespace CarbonLab {
         RESET
     };
 
-    void setConsoleColor(Color color);
+    CARBON_EXPORT void setConsoleColor(Color color);
 }

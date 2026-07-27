@@ -3,11 +3,12 @@
 #include "core.h"
 #include <vector>
 #include "yaml-cpp/node/node.h"
+#include "CarbonExport.h"
 
 namespace CarbonLab {
 
-    struct C14FsSchema {
-        struct File {
+    struct CARBON_EXPORT C14FsSchema {
+        struct CARBON_EXPORT File {
             str name;
             str vpath;
             str seedType;
@@ -27,7 +28,7 @@ namespace YAML {
     using namespace CarbonLab;
 
     template <>
-    struct convert<CarbonLab::C14FsSchema> {
+    struct CARBON_EXPORT convert<CarbonLab::C14FsSchema> {
         static bool decode(const Node& node, CarbonLab::C14FsSchema& rhs) {
             rhs.files = node["files"].as<std::vector<CarbonLab::C14FsSchema::File>>();
             return true;
@@ -35,7 +36,7 @@ namespace YAML {
     };
 
     template <>
-    struct convert<CarbonLab::C14FsSchema::File> {
+    struct CARBON_EXPORT convert<CarbonLab::C14FsSchema::File> {
         static bool decode(const Node& node, CarbonLab::C14FsSchema::File& rhs) {
 
             if (node.IsNull()) return false;

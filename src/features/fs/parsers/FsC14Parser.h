@@ -4,10 +4,11 @@
 #include "features/fs/SubFileSystem.h"
 #include "utils/logging/Logger.h"
 #include <memory>
+#include "CarbonExport.h"
 
 namespace CarbonLab {
 
-    class FsC14Parser : public C14Parser<SubFileSystem> {
+    class CARBON_EXPORT FsC14Parser : public C14Parser<SubFileSystem> {
     public:
         FsC14Parser() : logger("FsC14Parser") {}
         std::unique_ptr<SubFileSystem> parse(const YAML::Node& node) override;

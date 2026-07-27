@@ -2,10 +2,11 @@
 
 #include "core.h"
 #include <uuid.h>
+#include "CarbonExport.h"
 
 namespace CarbonLab::UUID {
 
-    inline str generateUUID() {
+    inline CARBON_EXPORT str generateUUID() {
         std::random_device rd;
         auto seed_data = std::array<int, std::mt19937::state_size>{};
         std::generate(seed_data.begin(), seed_data.end(), std::ref(rd));

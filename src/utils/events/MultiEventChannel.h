@@ -3,6 +3,7 @@
 #include <map>
 #include <memory>
 #include "EventChannel.h"
+#include "CarbonExport.h"
 
 namespace CarbonLab {
     template <class TInstance, class EventType>

@@ -6,10 +6,11 @@
 #include <shared_mutex>
 #include <thread>
 #include <unordered_map>
+#include "CarbonExport.h"
 
 namespace CarbonLab {
 
-    class GatewayServer : public VirtualSystem<GatewayServer> {
+    class CARBON_EXPORT GatewayServer : public VirtualSystem<GatewayServer> {
     public:
         GatewayServer() = default;
         ~GatewayServer() { stop(); }

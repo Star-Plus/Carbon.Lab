@@ -2,10 +2,11 @@
 
 #include "utils/events/EventChannel.h"
 #include "AssertFailEvent.h"
+#include "CarbonExport.h"
 
 namespace CarbonLab {
 
-    class AssertFailChannel : public EventChannel<AssertFailChannel, AssertFailEventPayload> {
+    class CARBON_EXPORT AssertFailChannel : public EventChannel<AssertFailChannel, AssertFailEventPayload> {
     public:
         AssertFailChannel();
     };

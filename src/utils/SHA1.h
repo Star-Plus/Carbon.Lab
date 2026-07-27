@@ -2,9 +2,10 @@
 
 #include <iomanip>
 #include <sstream>
+#include "CarbonExport.h"
 
 namespace CarbonLab {
-    class SHA1 {
+    class CARBON_EXPORT SHA1 {
     public:
         SHA1() { reset(); }
 

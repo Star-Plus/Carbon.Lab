@@ -8,10 +8,12 @@
 #include <vector>
 #include "core/VirtualSystem.h"
 
+#include "CarbonExport.h"
+
 namespace CarbonLab {
 
 
-    class SubFileSystem : public VirtualSystem<SubFileSystem> {
+    class CARBON_EXPORT SubFileSystem : public VirtualSystem<SubFileSystem> {
     public:
         SubFileSystem(const fpath& virtualRoot, bool autoCleanup=true);
         SubFileSystem(const fpath& virtualRoot, const std::vector<VirtualFile>& files, bool autoCleanup=true);

@@ -2,9 +2,11 @@
 
 #include <yaml-cpp/yaml.h>
 
+#include "CarbonExport.h"
+
 namespace CarbonLab {
 
-    class IC14Parser {
+    class CARBON_EXPORT IC14Parser {
     public:
         virtual ~IC14Parser() = default;
     };

@@ -4,6 +4,7 @@
 #include "utils/generators/StringSeeds.h"
 #include <algorithm>
 #include <optional>
+#include "CarbonExport.h"
 
 namespace CarbonLab {
 
@@ -11,7 +12,7 @@ namespace CarbonLab {
         Copied, Random, UC
     };
 
-    inline SeedType seedTypeFromStr(const str& str) {
+    inline CARBON_EXPORT SeedType seedTypeFromStr(const str& str) {
         auto lower = str; std::transform(lower.begin(), lower.end(), lower.begin(), [](unsigned char c) { return std::tolower(c); });
 
         if (lower == "copied") return SeedType::Copied;
@@ -21,7 +22,7 @@ namespace CarbonLab {
         return SeedType::Random;
     }
 
-    struct VirtualFile {
+    struct CARBON_EXPORT VirtualFile {
         VirtualFile(const str& filename, const fpath& virtualFilePath, const fpath& seedFilePath, bool preRunWrite=false) : 
             filename(filename) ,seedFilePath(seedFilePath), virtualPath(virtualFilePath), preRunWrite(preRunWrite), seedType(SeedType::Copied) {}
             

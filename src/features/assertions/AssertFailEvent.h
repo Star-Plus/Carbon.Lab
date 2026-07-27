@@ -3,12 +3,14 @@
 #include "core.h"
 #include "utils/events/Event.h"
 
+#include "CarbonExport.h"
+
 namespace CarbonLab {
 
-    struct AssertFailEventPayload {
+    struct CARBON_EXPORT AssertFailEventPayload {
         str suiteName, testName;
         str expected, actual;
     };
 
-    class AssertFailEvent : public Event<AssertFailEventPayload> {};
+    class CARBON_EXPORT AssertFailEvent : public Event<AssertFailEventPayload> {};
 }

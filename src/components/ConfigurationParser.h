@@ -7,6 +7,8 @@
 #include "core/C14Parser.h"
 #include "carbon.h"
 
+#include "CarbonExport.h"
+
 namespace CarbonLab {
 
     enum class ParserType {
@@ -14,7 +16,7 @@ namespace CarbonLab {
         APPS_DOCKER
     };
 
-    class ConfigurationParser {
+    class CARBON_EXPORT ConfigurationParser {
         
     public:
         ConfigurationParser(const fpath& src);

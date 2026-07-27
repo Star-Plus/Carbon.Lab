@@ -1,7 +1,8 @@
 #pragma once
 
 #include <core.h>
+#include "CarbonExport.h"
 
 namespace CarbonLab::OS::AppData {
-    [[nodiscard]] fpath GetAppDataDir();
+    CARBON_EXPORT [[nodiscard]] fpath GetAppDataDir();
 }

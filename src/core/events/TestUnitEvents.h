@@ -3,21 +3,22 @@
 #include "core.h"
 #include "utils/events/Event.h"
 #include "utils/events/MultiEventChannel.h"
+#include "CarbonExport.h"
 
 namespace CarbonLab {
 
-    struct TestUnitUpEventPayload {
+    struct CARBON_EXPORT TestUnitUpEventPayload {
         str name;
         str suite;
     };
 
-    class TestUnitUpEvent : public Event<TestUnitUpEventPayload> {};
-    class TestUnitDownEvent : public Event<TestUnitUpEventPayload> {};
+    class CARBON_EXPORT TestUnitUpEvent : public Event<TestUnitUpEventPayload> {};
+    class CARBON_EXPORT TestUnitDownEvent : public Event<TestUnitUpEventPayload> {};
 
     enum class TestUnitEventType {
         TestUnitUp,
         TestUnitDown
     };
 
-    class TestUnitEventChannel : public MultiEventChannel<TestUnitEventChannel, TestUnitEventType> {};
+    class CARBON_EXPORT TestUnitEventChannel : public MultiEventChannel<TestUnitEventChannel, TestUnitEventType> {};
 }

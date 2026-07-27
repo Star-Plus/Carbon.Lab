@@ -7,10 +7,11 @@
 
 #include "core.h"
 #include <ctime>
+#include "CarbonExport.h"
 
 namespace CarbonLab
 {
-    class DateTime
+    class CARBON_EXPORT DateTime
     {
         time_t rawTime = 0;
     public:
@@ -24,8 +25,8 @@ namespace CarbonLab
 
     };
 
-    void operator<< (std::ostream& out, const DateTime& dateTime);
-    str operator+ (const str& prefix, const DateTime& dateTime);
+    CARBON_EXPORT void operator<< (std::ostream& out, const DateTime& dateTime);
+    CARBON_EXPORT str operator+ (const str& prefix, const DateTime& dateTime);
 } // Split
 
 #endif //SPLITVCS_DATETIME_H

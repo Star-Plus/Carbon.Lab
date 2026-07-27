@@ -6,11 +6,13 @@
 #include "yaml-cpp/node/node.h"
 #include <map>
 
+#include "CarbonExport.h"
+
 namespace YAML {
     using namespace CarbonLab;
 
     template<>
-    struct convert<CarbonLab::DockerAppRequest> {
+    struct CARBON_EXPORT convert<CarbonLab::DockerAppRequest> {
         static bool decode(const Node& node, CarbonLab::DockerAppRequest& rhs) {
             if (node["ports"].IsDefined() && node["ports"].IsMap()) {
                 Logger("DockerAppC14Definition").debug("Parsing ports");

@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include "CarbonExport.h"
 
 #include "features/apps/docker/DockerComposer.h"
 #include "features/assertions/AssertionPool.h"
@@ -11,7 +12,7 @@ namespace CarbonLab {
     class ConfigurationParser;
 }
 
-class Carbon {
+class CARBON_EXPORT Carbon {
 
 public:
     std::unique_ptr<CarbonLab::SubFileSystem> fs = nullptr;

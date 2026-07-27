@@ -4,6 +4,8 @@
 #include "core.h"
 #include <string>
 
+#include "CarbonExport.h"
+
 namespace CarbonLab {
 
     #define ASSERT_INVOKE(descPrefix, pass) { \
@@ -13,7 +15,7 @@ namespace CarbonLab {
         return pass;\
     }
 
-    class AssertionPool {
+    class CARBON_EXPORT AssertionPool {
     public:
         AssertionPool(str testName="All", str suiteName="All") : suiteName(suiteName), testName(testName) {}
 

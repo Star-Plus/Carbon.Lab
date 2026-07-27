@@ -26,7 +26,13 @@ add_library(Carbon SHARED
   ${SOURCE_FILES}
 )
 
-target_include_directories(Carbon PUBLIC src)
+include(GenerateExportHeader)
+generate_export_header(Carbon
+  EXPORT_MACRO_NAME CARBON_EXPORT
+  EXPORT_FILE_NAME CarbonExport.h
+)
+
+target_include_directories(Carbon PUBLIC src $<BUILD_INTERFACE:${CMAKE_CURRENT_BINARY_DIR}>)
 
 include(FetchContent)
 

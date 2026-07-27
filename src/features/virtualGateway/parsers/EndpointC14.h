@@ -3,10 +3,11 @@
 #include "core.h"
 #include "yaml-cpp/node/node.h"
 #include <vector>
+#include "CarbonExport.h"
 
 namespace CarbonLab {
 
-    struct EndpointC14Request {
+    struct CARBON_EXPORT EndpointC14Request {
         str url;
         str method;
         str body;
@@ -15,14 +16,14 @@ namespace CarbonLab {
         std::vector<std::pair<str, str>> queryParams;
     };
 
-    struct EndpointC14Response {
+    struct CARBON_EXPORT EndpointC14Response {
         int statusCode;
         str contentType;
         str body;
         std::vector<std::pair<str, str>> headers;
     };
 
-    struct EndpointC14 {
+    struct CARBON_EXPORT EndpointC14 {
         EndpointC14Request request;
         EndpointC14Response response;
     };
@@ -33,7 +34,7 @@ namespace YAML {
     using namespace CarbonLab;
 
     template<>
-    struct convert<CarbonLab::EndpointC14Request> {
+    struct CARBON_EXPORT convert<CarbonLab::EndpointC14Request> {
         static bool decode(const Node& node, CarbonLab::EndpointC14Request& rhs) {
             rhs.url = node["url"].as<str>();
             rhs.method = node["method"].as<str>();
@@ -46,7 +47,7 @@ namespace YAML {
     };
 
     template<>
-    struct convert<CarbonLab::EndpointC14Response> {
+    struct CARBON_EXPORT convert<CarbonLab::EndpointC14Response> {
         static bool decode(const Node& node, CarbonLab::EndpointC14Response& rhs) {
             rhs.statusCode = node["status_code"].as<int>();
             rhs.contentType = node["content_type"].as<str>();
@@ -57,7 +58,7 @@ namespace YAML {
     };
 
     template<>
-    struct convert<CarbonLab::EndpointC14> {
+    struct CARBON_EXPORT convert<CarbonLab::EndpointC14> {
         static bool decode(const Node& node, CarbonLab::EndpointC14& rhs) {
             rhs.request = node["request"].as<CarbonLab::EndpointC14Request>();
             rhs.response = node["response"].as<CarbonLab::EndpointC14Response>();

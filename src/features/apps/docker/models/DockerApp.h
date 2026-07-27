@@ -4,9 +4,11 @@
 #include <map>
 #include <vector>
 
+#include "CarbonExport.h"
+
 namespace CarbonLab {
 
-    struct DockerApp {
+    struct CARBON_EXPORT DockerApp {
         std::map<str, int> ports;
         std::map<str, str> env;
         str name;
@@ -14,7 +16,7 @@ namespace CarbonLab {
         str containerId;
     };
 
-    struct DockerAppRequest {
+    struct CARBON_EXPORT DockerAppRequest {
         std::map<str, int> ports;
         std::map<str, str> env;
         std::vector<fpath> initFiles;

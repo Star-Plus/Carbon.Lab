@@ -1,7 +1,9 @@
 #pragma once
 
+#include "CarbonExport.h"
+
 namespace CarbonLab {
-    class IEvent {
+    class CARBON_EXPORT IEvent {
     public:
         virtual ~IEvent() = default;
     };

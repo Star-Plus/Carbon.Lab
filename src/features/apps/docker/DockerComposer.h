@@ -8,9 +8,11 @@
 #include <queue>
 #include <vector>
 
+#include "CarbonExport.h"
+
 namespace CarbonLab {
 
-    class DockerComposer : public VirtualSystem<DockerComposer> {
+    class CARBON_EXPORT DockerComposer : public VirtualSystem<DockerComposer> {
     public:
         DockerComposer();
         ~DockerComposer();

@@ -2,10 +2,11 @@
 
 #include "Event.h"
 #include <memory>
+#include "CarbonExport.h"
 
 namespace CarbonLab {
 
-    class IEventChannel {
+    class CARBON_EXPORT IEventChannel {
     };
 
     template <class TInstance, typename TEventPayload>

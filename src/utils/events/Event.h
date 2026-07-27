@@ -4,6 +4,7 @@
 #include "Listener.h"
 #include <vector>
 #include <algorithm>
+#include "CarbonExport.h"
 
 namespace CarbonLab {
 

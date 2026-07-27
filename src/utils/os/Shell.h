@@ -1,7 +1,9 @@
 #pragma once
 
 #include "core.h"
+#include "CarbonExport.h"
+
 namespace CarbonLab::OS::Shell {
 
-    str exec(const char* cmd);
+    CARBON_EXPORT str exec(const char* cmd);
 }

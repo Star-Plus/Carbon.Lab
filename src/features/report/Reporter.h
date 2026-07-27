@@ -8,15 +8,16 @@
 #include "utils/logging/Logger.h"
 #include "utils/os/ContextPath.h"
 #include "core/TestStatus.enum.h"
+#include "CarbonExport.h"
 
 namespace CarbonLab {
 
-    struct TestSheet {
+    struct CARBON_EXPORT TestSheet {
         str testName;
         DateTime startedAt, finishedAt;
         TestStatus status;
 
-        struct Failure {
+        struct CARBON_EXPORT Failure {
             str message;
             std::vector<str> stackTrace;
             str expected, actual;
@@ -24,7 +25,7 @@ namespace CarbonLab {
         } failure;
     };
 
-    class Reporter {
+    class CARBON_EXPORT Reporter {
     public:
 
         static std::shared_ptr<Reporter> getInstance(const str& name) {

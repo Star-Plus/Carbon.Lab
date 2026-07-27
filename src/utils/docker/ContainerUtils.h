@@ -2,7 +2,9 @@
 
 #include "core.h"
 #include <map>
+#include "CarbonExport.h"
+
 namespace CarbonLab::Docker {
-    std::map<int, int> getMappedHostPorts(const str& containerId);
-    void launchDocker();
+    CARBON_EXPORT std::map<int, int> getMappedHostPorts(const str& containerId);
+    CARBON_EXPORT void launchDocker();
 }

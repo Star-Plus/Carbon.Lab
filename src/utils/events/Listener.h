@@ -1,6 +1,8 @@
 #pragma once
 
 #include "IListener.h"
+#include "CarbonExport.h"
+
 namespace CarbonLab {
     template <typename TPayload>
     class Listener : public IListener {

@@ -1,8 +1,10 @@
 #pragma once
 
 #include "core.h"
+#include "CarbonExport.h"
+
 namespace CarbonLab::OS {
 
-    bool isAppReachable(const str& appName);
+    CARBON_EXPORT bool isAppReachable(const str& appName);
 
 }
