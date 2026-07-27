@@ -18,15 +18,15 @@ namespace CarbonLab {
         }
         
         void push(const TEventPayload& payload) {
-            event.raise(payload);
+            event->raise(payload);
         }
 
         void subscribe(Listener<TEventPayload>& listener) {
-            event.subscribe(listener);
+            event->subscribe(listener);
         }
 
         void unsubscribe(Listener<TEventPayload>* listener) {
-            event.unsubscribe(listener);
+            event->unsubscribe(listener);
         }
 
     protected:
