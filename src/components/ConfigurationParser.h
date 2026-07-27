@@ -19,6 +19,14 @@ namespace CarbonLab {
     class CARBON_EXPORT ConfigurationParser {
         
     public:
+        ConfigurationParser(const ConfigurationParser&) = delete;
+        ConfigurationParser& operator=(const ConfigurationParser&) = delete;
+
+        ConfigurationParser(ConfigurationParser&&) = default;
+        ConfigurationParser& operator=(ConfigurationParser&&) = default;
+
+        ConfigurationParser() = default;
+
         ConfigurationParser(const fpath& src);
         YAML::Node getYaml() { return loadedYaml; }
 
